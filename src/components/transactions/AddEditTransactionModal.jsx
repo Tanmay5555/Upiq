@@ -6,7 +6,7 @@ import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
 
 export const AddEditTransactionModal = ({ isOpen, onClose, transactionToEdit }) => {
-  const { addTransaction, updateTransaction, predictCategory } = useFinancial();
+  const { addTransaction, updateTransaction, predictCategory, currentCurrency } = useFinancial();
 
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -135,10 +135,10 @@ export const AddEditTransactionModal = ({ isOpen, onClose, transactionToEdit }) 
         {/* Amount */}
         <div>
           <label className="block text-xs font-semibold text-slate-300 mb-1.5 light:text-slate-700">
-            Amount ($ USD) *
+            Amount ({currentCurrency?.symbol || '₹'} {currentCurrency?.code || 'INR'}) *
           </label>
           <div className="relative">
-            <DollarSign className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
+            <span className="absolute left-3.5 top-2.5 text-sm font-bold text-slate-400">{currentCurrency?.symbol || '₹'}</span>
             <input
               type="number"
               step="0.01"

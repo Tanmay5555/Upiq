@@ -14,7 +14,7 @@ export const userProfile = {
   email: "varsha.s@upiq.ai",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
   accountType: "UPIQ Pro AI",
-  currency: "USD",
+  currency: "INR",
   memberSince: "Jan 2024",
   unreadAlertsCount: 3,
 };

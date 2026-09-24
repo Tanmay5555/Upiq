@@ -31,7 +31,7 @@ export const FinancialProvider = ({ children }) => {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState(() => {
     const savedProf = getInitialState('profile', null);
     if (savedProf?.currency) return savedProf.currency;
-    return getInitialState('currency', 'USD');
+    return getInitialState('currency', 'INR');
   });
   const [kpi, setKpi] = useState(initialKpi);
   const [categories, setCategories] = useState(initialCategories);
@@ -62,7 +62,7 @@ export const FinancialProvider = ({ children }) => {
 
   // Active currency object
   const currentCurrency =
-    supportedCurrencies.find((c) => c.code === selectedCurrencyCode) || supportedCurrencies[0];
+    supportedCurrencies.find((c) => c.code === selectedCurrencyCode) || supportedCurrencies[1] || supportedCurrencies[0];
 
   // Global Currency Formatting Helper
   const formatCurrency = (amountInUSD, decimals = 2) => {
@@ -80,8 +80,8 @@ export const FinancialProvider = ({ children }) => {
   };
 
   // Auth operations
-  const login = (email, password, currencyCode = 'USD', userName = 'Varsha Sharma') => {
-    const targetCurrency = currencyCode || selectedCurrencyCode || 'USD';
+  const login = (email, password, currencyCode, userName = 'Varsha Sharma') => {
+    const targetCurrency = currencyCode || selectedCurrencyCode || profile.currency || 'INR';
     setSelectedCurrencyCode(targetCurrency);
     const updatedProfile = {
       ...profile,
