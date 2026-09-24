@@ -36,3 +36,280 @@
 .pin-input { width:170px;height:42px;margin:16px auto 0;padding:0 10px;border:1px solid rgba(255,255,255,.12);border-radius:11px;outline:none;background:rgba(0,0,0,.2);color:transparent;text-align:center;letter-spacing:12px;caret-color:#a5b4fc;font-size:14px; }
 .pin-input:focus { border-color:rgba(129,140,248,.5);box-shadow:0 0 0 3px rgba(99,102,241,.1); }
 .pin-dots { margin:-27px 0 19px;pointer-events:none; }
+
+/* Light mode overrides for UPI Hub and interactive cards */
+html.light .upi-hub, body.light .upi-hub, .light .upi-hub {
+  color: #1F2937;
+}
+
+html.light .upi-status, body.light .upi-status, .light .upi-status,
+html.light .scan-card, body.light .scan-card, .light .scan-card,
+html.light .transfer-card, body.light .transfer-card, .light .transfer-card,
+html.light .action-panel, body.light .action-panel, .light .action-panel,
+html.light .activity-panel, body.light .activity-panel, .light .activity-panel,
+html.light .glass-surface, body.light .glass-surface, .light .glass-surface {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .status-greeting, body.light .status-greeting, .light .status-greeting {
+  color: #6B7280 !important;
+}
+
+html.light .status-user h2, body.light .status-user h2, .light .status-user h2 {
+  color: #1F2937 !important;
+}
+
+html.light .status-user h2 span, body.light .status-user h2 span, .light .status-user h2 span {
+  color: #7C3AED !important;
+}
+
+html.light .upi-id-pill, body.light .upi-id-pill, .light .upi-id-pill {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #374151 !important;
+}
+
+html.light .upi-id-pill svg, body.light .upi-id-pill svg, .light .upi-id-pill svg {
+  color: #7C3AED !important;
+}
+
+html.light .status-secure, body.light .status-secure, .light .status-secure {
+  color: #059669 !important;
+}
+
+html.light .status-secure svg, body.light .status-secure svg, .light .status-secure svg {
+  color: #059669 !important;
+}
+
+html.light .panel-title-row h3, body.light .panel-title-row h3, .light .panel-title-row h3 {
+  color: #1F2937 !important;
+}
+
+html.light .panel-title-row p, body.light .panel-title-row p, .light .panel-title-row p {
+  color: #6B7280 !important;
+}
+
+html.light .section-kicker, body.light .section-kicker, .light .section-kicker {
+  color: #7C3AED !important;
+}
+
+html.light .mini-icon, body.light .mini-icon, .light .mini-icon {
+  background: rgba(124, 58, 237, 0.08) !important;
+  border-color: rgba(124, 58, 237, 0.2) !important;
+  color: #7C3AED !important;
+}
+
+html.light .mini-icon--cyan, body.light .mini-icon--cyan, .light .mini-icon--cyan {
+  background: rgba(14, 165, 233, 0.08) !important;
+  border-color: rgba(14, 165, 233, 0.2) !important;
+  color: #0284C7 !important;
+}
+
+html.light .qr-tile, body.light .qr-tile, .light .qr-tile {
+  background: radial-gradient(circle at 50% 35%, rgba(124, 58, 237, 0.06), transparent 55%), #F9FAFB !important;
+  border-color: #E5E7EB !important;
+}
+
+html.light .qr-cta, body.light .qr-cta, .light .qr-cta {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  color: #374151 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .scan-card-foot, body.light .scan-card-foot, .light .scan-card-foot {
+  color: #6B7280 !important;
+}
+
+html.light .scan-card-foot span, body.light .scan-card-foot span, .light .scan-card-foot span {
+  color: #059669 !important;
+}
+
+html.light .scan-card-foot button, body.light .scan-card-foot button, .light .scan-card-foot button {
+  color: #4B5563 !important;
+}
+
+html.light .scan-card-foot button:hover, body.light .scan-card-foot button:hover, .light .scan-card-foot button:hover {
+  color: #7C3AED !important;
+}
+
+html.light .contacts-label, body.light .contacts-label, .light .contacts-label {
+  color: #6B7280 !important;
+}
+
+html.light .contacts-label button, body.light .contacts-label button, .light .contacts-label button {
+  color: #7C3AED !important;
+}
+
+html.light .contact-chip, body.light .contact-chip, .light .contact-chip {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #374151 !important;
+}
+
+html.light .contact-chip span, body.light .contact-chip span, .light .contact-chip span {
+  color: #374151 !important;
+}
+
+html.light .contact-chip--selected, body.light .contact-chip--selected, .light .contact-chip--selected {
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: #7C3AED !important;
+  color: #7C3AED !important;
+  font-weight: 600 !important;
+}
+
+html.light .contact-chip--selected span, body.light .contact-chip--selected span, .light .contact-chip--selected span {
+  color: #7C3AED !important;
+}
+
+html.light .amount-entry, body.light .amount-entry, .light .amount-entry {
+  border-bottom-color: #E5E7EB !important;
+}
+
+html.light .amount-entry > span:first-child, body.light .amount-entry > span:first-child, .light .amount-entry > span:first-child {
+  color: #7C3AED !important;
+}
+
+html.light .amount-entry input, body.light .amount-entry input, .light .amount-entry input {
+  color: #1F2937 !important;
+}
+
+html.light .amount-label, body.light .amount-label, .light .amount-label {
+  color: #6B7280 !important;
+}
+
+html.light .amount-slider, body.light .amount-slider, .light .amount-slider {
+  background: linear-gradient(to right, #7C3AED var(--slider-progress), #E5E7EB var(--slider-progress)) !important;
+}
+
+html.light .amount-chip, body.light .amount-chip, .light .amount-chip {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #4B5563 !important;
+}
+
+html.light .amount-chip:hover, body.light .amount-chip:hover, .light .amount-chip:hover,
+html.light .amount-chip--active, body.light .amount-chip--active, .light .amount-chip--active {
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: #7C3AED !important;
+  color: #7C3AED !important;
+  font-weight: 600 !important;
+}
+
+html.light .note-input, body.light .note-input, .light .note-input {
+  background: #FCFCFD !important;
+  border-color: #E5E7EB !important;
+  color: #1F2937 !important;
+}
+
+html.light .note-input::placeholder, body.light .note-input::placeholder, .light .note-input::placeholder {
+  color: #6B7280 !important;
+}
+
+html.light .transfer-summary, body.light .transfer-summary, .light .transfer-summary {
+  color: #6B7280 !important;
+}
+
+html.light .transfer-summary b, body.light .transfer-summary b, .light .transfer-summary b {
+  color: #1F2937 !important;
+}
+
+html.light .transfer-summary span:last-child, body.light .transfer-summary span:last-child, .light .transfer-summary span:last-child {
+  color: #059669 !important;
+}
+
+html.light .action-grid button, body.light .action-grid button, .light .action-grid button {
+  background: #FCFCFD !important;
+  border-color: #E5E7EB !important;
+}
+
+html.light .action-grid button:hover, body.light .action-grid button:hover, .light .action-grid button:hover {
+  background: rgba(124, 58, 237, 0.04) !important;
+  border-color: #7C3AED !important;
+}
+
+html.light .action-grid b, body.light .action-grid b, .light .action-grid b {
+  color: #1F2937 !important;
+}
+
+html.light .action-grid small, body.light .action-grid small, .light .action-grid small {
+  color: #6B7280 !important;
+}
+
+html.light .history-link, body.light .history-link, .light .history-link {
+  color: #7C3AED !important;
+}
+
+html.light .upi-transaction, body.light .upi-transaction, .light .upi-transaction {
+  border-bottom-color: #E5E7EB !important;
+}
+
+html.light .merchant-copy b, body.light .merchant-copy b, .light .merchant-copy b {
+  color: #1F2937 !important;
+}
+
+html.light .merchant-copy small, body.light .merchant-copy small, .light .merchant-copy small {
+  color: #6B7280 !important;
+}
+
+html.light .merchant-amount, body.light .merchant-amount, .light .merchant-amount {
+  color: #1F2937 !important;
+}
+
+html.light .merchant-amount--credit, body.light .merchant-amount--credit, .light .merchant-amount--credit {
+  color: #059669 !important;
+}
+
+html.light .empty-activity, body.light .empty-activity, .light .empty-activity {
+  color: #6B7280 !important;
+}
+
+html.light .upi-dialog, body.light .upi-dialog, .light .upi-dialog {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  color: #1F2937 !important;
+}
+
+html.light .upi-dialog h3, body.light .upi-dialog h3, .light .upi-dialog h3 {
+  color: #1F2937 !important;
+}
+
+html.light .upi-dialog p, body.light .upi-dialog p, .light .upi-dialog p {
+  color: #6B7280 !important;
+}
+
+html.light .dialog-close, body.light .dialog-close, .light .dialog-close {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #4B5563 !important;
+}
+
+html.light .dialog-secondary, body.light .dialog-secondary, .light .dialog-secondary {
+  background: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #374151 !important;
+}
+
+html.light .receipt-amount, body.light .receipt-amount, .light .receipt-amount {
+  color: #1F2937 !important;
+}
+
+html.light .receipt-details, body.light .receipt-details, .light .receipt-details {
+  background: #F9FAFB !important;
+  border-color: #E5E7EB !important;
+}
+
+html.light .receipt-details div, body.light .receipt-details div, .light .receipt-details div {
+  border-bottom-color: #E5E7EB !important;
+}
+
+html.light .receipt-details span, body.light .receipt-details span, .light .receipt-details span {
+  color: #6B7280 !important;
+}
+
+html.light .receipt-details b, body.light .receipt-details b, .light .receipt-details b {
+  color: #1F2937 !important;
+}
+
