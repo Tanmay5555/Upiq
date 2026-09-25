@@ -9,6 +9,7 @@ import { ToastContainer } from '../common/Toast';
 import { useFinancial } from '../../context/FinancialContext';
 
 import { ShootingStars } from '../common/ShootingStars';
+import { PixelTransition } from '../common/PixelTransition';
 
 const TAB_INDEX_MAP = {
   dashboard: 0,
@@ -72,6 +73,9 @@ export const MainLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen flex bg-transparent text-slate-100 light:text-slate-900 selection:bg-indigo-500 selection:text-white transition-colors overflow-hidden relative">
+      {/* Webflow Style Pixel Transition overlay on tab switch */}
+      <PixelTransition activeKey={activeTab} />
+
       {/* Background Shooting Star Animation */}
       <ShootingStars />
       {/* FIXED LEFT SIDEBAR: Never moves during tab transitions */}
