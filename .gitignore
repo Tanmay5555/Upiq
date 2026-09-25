@@ -1,0 +1,51 @@
+# Environment variables & secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.env.*
+!.env.example
+!frontend/.env.example
+!backend/.env.example
+
+# Build outputs & dependencies
+node_modules/
+dist/
+build/
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.factorypath
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & Temporary files
+*.log
+logs/
+temp/
+tmp/
+*.tmp
+*.bak
+*.swp
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+.eslintcache
