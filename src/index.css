@@ -258,17 +258,18 @@ html.light, body.light, .light {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 
-/* Shooting Star Background Animation Styles */
+/* Enhanced Shooting Star Background Animation Styles */
 .shooting-star {
   position: absolute;
   height: 2px;
-  width: var(--star-tail-length, 140px);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(124, 58, 237, 0.8), rgba(99, 102, 241, 0.3), transparent);
-  border-radius: 999px;
-  filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.8));
-  transform: rotate(-35deg);
+  width: var(--star-tail-length, 200px);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(167, 139, 250, 0.9) 25%, rgba(124, 58, 237, 0.45) 60%, transparent 100%);
+  border-radius: 9999px;
+  filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.9));
+  transform: rotate(var(--star-angle, -38deg));
   opacity: 0;
-  animation: shooting-star-anim linear infinite;
+  will-change: transform, opacity;
+  animation: shooting-star-anim var(--star-duration, 2.5s) cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .shooting-star-head {
@@ -276,29 +277,31 @@ html.light, body.light, .light {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   background: #ffffff;
   border-radius: 50%;
   box-shadow:
-    0 0 0 2px rgba(255, 255, 255, 0.2),
-    0 0 10px 2px rgba(255, 255, 255, 0.9),
-    0 0 18px 5px rgba(124, 58, 237, 0.7);
+    0 0 0 2px rgba(255, 255, 255, 0.4),
+    0 0 12px 3px rgba(255, 255, 255, 1),
+    0 0 24px 8px rgba(124, 58, 237, 0.8),
+    0 0 36px 12px rgba(236, 72, 153, 0.4);
 }
 
 @keyframes shooting-star-anim {
   0% {
-    transform: translateX(0) translateY(0) rotate(-35deg);
+    transform: translateX(0) translateY(0) rotate(var(--star-angle, -38deg)) scaleX(0.2);
     opacity: 0;
   }
-  12% {
+  15% {
     opacity: 1;
+    transform: translateX(-120px) translateY(120px) rotate(var(--star-angle, -38deg)) scaleX(1);
   }
-  70% {
-    opacity: 1;
+  75% {
+    opacity: 0.9;
   }
   100% {
-    transform: translateX(-700px) translateY(700px) rotate(-35deg);
+    transform: translateX(-850px) translateY(850px) rotate(var(--star-angle, -38deg)) scaleX(0.4);
     opacity: 0;
   }
 }
