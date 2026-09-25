@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import {
   userProfile as initialProfile,
+  testStandardUser,
+  testAdminUser,
   kpiSummary as initialKpi,
   categoryBreakdown as initialCategories,
   incomeExpenseTrends as initialTrends,
@@ -80,23 +82,42 @@ export const FinancialProvider = ({ children }) => {
   };
 
   // Auth operations
-  const login = (email, password, currencyCode, userName = 'Varsha Sharma') => {
-    const targetCurrency = currencyCode || selectedCurrencyCode || profile.currency || 'INR';
+  const login = (email, password, currencyCode, userName, role) => {
+    const isAdmin = (email && email.toLowerCase().includes('admin')) || role === 'admin';
+    const basePreset = isAdmin ? testAdminUser : testStandardUser;
+
+    const targetCurrency = currencyCode || selectedCurrencyCode || basePreset.currency || 'INR';
     setSelectedCurrencyCode(targetCurrency);
+
     const updatedProfile = {
-      ...profile,
-      email: email || profile.email,
-      name: userName || profile.name,
+      ...basePreset,
+      email: email || basePreset.email,
+      name: userName || basePreset.name,
       currency: targetCurrency,
+      role: isAdmin ? 'admin' : 'user',
+      accountType: isAdmin ? 'UPIQ Super Admin' : 'UPIQ Pro AI',
     };
+
     setProfile(updatedProfile);
     setIsAuthenticated(true);
+
+    if (isAdmin) {
+      setActiveTab('admin');
+    } else {
+      setActiveTab('dashboard');
+    }
+
     try {
       localStorage.setItem('upiq_auth', JSON.stringify(true));
       localStorage.setItem('upiq_profile', JSON.stringify(updatedProfile));
       localStorage.setItem('upiq_currency', JSON.stringify(targetCurrency));
     } catch {}
-    addToast('Welcome to UPIQ AI', `Logged in as ${updatedProfile.name} (${targetCurrency})`, 'success');
+
+    addToast(
+      'Welcome to UPIQ AI',
+      `Logged in as ${updatedProfile.name} (${isAdmin ? 'Admin View' : 'Standard User'})`,
+      'success'
+    );
   };
 
   const logout = () => {

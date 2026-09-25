@@ -9,15 +9,31 @@ export const supportedCurrencies = [
   { code: 'AUD', symbol: 'A$', rate: 1.52, name: 'Australian Dollar', country: 'Australia' },
 ];
 
-export const userProfile = {
+export const testStandardUser = {
+  id: "user-001",
   name: "Varsha Sharma",
   email: "varsha.s@upiq.ai",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
   accountType: "UPIQ Pro AI",
+  role: "user",
   currency: "INR",
   memberSince: "Jan 2024",
   unreadAlertsCount: 3,
 };
+
+export const testAdminUser = {
+  id: "admin-001",
+  name: "Tanmay Admin",
+  email: "admin@upiq.ai",
+  avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=200",
+  accountType: "UPIQ Super Admin",
+  role: "admin",
+  currency: "INR",
+  memberSince: "Oct 2023",
+  unreadAlertsCount: 5,
+};
+
+export const userProfile = testStandardUser;
 
 
 export const kpiSummary = {

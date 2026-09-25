@@ -16,6 +16,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { useFinancial } from '../context/FinancialContext';
+import { ShootingStars } from '../components/common/ShootingStars';
 
 export const Login = () => {
   const { login, supportedCurrencies } = useFinancial();
@@ -30,21 +31,26 @@ export const Login = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const triggerLoginProcess = (emailVal, passVal, currVal, nameVal) => {
+  const triggerLoginProcess = (emailVal, passVal, currVal, nameVal, roleVal) => {
     setIsSubmitting(true);
     // Smooth delay for Framer Motion exit animation to play out
     setTimeout(() => {
-      login(emailVal, passVal, currVal, nameVal);
+      login(emailVal, passVal, currVal, nameVal, roleVal);
     }, 550);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    triggerLoginProcess(vpa, password, selectedCurrency, name);
+    const isAdm = vpa.toLowerCase().includes('admin');
+    triggerLoginProcess(vpa, password, selectedCurrency, name, isAdm ? 'admin' : 'user');
   };
 
-  const handleQuickDemo = () => {
-    triggerLoginProcess('varsha.s@upiq.ai', 'demo123', selectedCurrency, name);
+  const handleUserDemo = () => {
+    triggerLoginProcess('varsha.s@upiq.ai', 'user123', selectedCurrency, 'Varsha Sharma', 'user');
+  };
+
+  const handleAdminDemo = () => {
+    triggerLoginProcess('admin@upiq.ai', 'admin123', selectedCurrency, 'Tanmay Admin', 'admin');
   };
 
   const handleCurrencySelect = (code, country) => {
@@ -125,6 +131,8 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between p-4 md:p-8 relative overflow-hidden selection:bg-indigo-500 selection:text-white">
+      {/* Background Shooting Star Animation */}
+      <ShootingStars />
       {/* Ambient background glowing radial blobs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
@@ -433,17 +441,32 @@ export const Login = () => {
                       )}
                     </motion.button>
 
-                    {/* Quick 1-Click Demo Button */}
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={handleQuickDemo}
-                      className="w-full py-2.5 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-indigo-300 transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-                      Quick 1-Click Demo Login
-                    </motion.button>
+                    {/* Quick 1-Click Test Login Buttons */}
+                    <div className="grid grid-cols-2 gap-2.5 pt-1">
+                      <motion.button
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={handleUserDemo}
+                        className="py-2.5 px-3 rounded-xl border border-indigo-500/30 bg-indigo-600/10 hover:bg-indigo-600/20 text-xs font-semibold text-indigo-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                        title="Login as Standard User (Varsha Sharma)"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                        <span>User Login</span>
+                      </motion.button>
+
+                      <motion.button
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={handleAdminDemo}
+                        className="py-2.5 px-3 rounded-xl border border-purple-500/30 bg-purple-600/10 hover:bg-purple-600/20 text-xs font-semibold text-purple-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+                        title="Login as Admin (Tanmay Admin)"
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                        <span>Admin Login</span>
+                      </motion.button>
+                    </div>
                   </form>
 
                   <div className="pt-2 border-t border-slate-800/80 text-center flex items-center justify-center gap-4 text-[10px] text-slate-500">

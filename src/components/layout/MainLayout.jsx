@@ -8,6 +8,8 @@ import { AddEditTransactionModal } from '../transactions/AddEditTransactionModal
 import { ToastContainer } from '../common/Toast';
 import { useFinancial } from '../../context/FinancialContext';
 
+import { ShootingStars } from '../common/ShootingStars';
+
 const TAB_INDEX_MAP = {
   dashboard: 0,
   transactions: 1,
@@ -69,7 +71,9 @@ export const MainLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen flex bg-transparent text-slate-100 light:text-slate-900 selection:bg-indigo-500 selection:text-white transition-colors overflow-hidden">
+    <div className="min-h-screen flex bg-transparent text-slate-100 light:text-slate-900 selection:bg-indigo-500 selection:text-white transition-colors overflow-hidden relative">
+      {/* Background Shooting Star Animation */}
+      <ShootingStars />
       {/* FIXED LEFT SIDEBAR: Never moves during tab transitions */}
       <Sidebar />
 
