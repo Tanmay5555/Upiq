@@ -8,7 +8,6 @@ import { AddEditTransactionModal } from '../transactions/AddEditTransactionModal
 import { ToastContainer } from '../common/Toast';
 import { useFinancial } from '../../context/FinancialContext';
 
-import { ShootingStars } from '../common/ShootingStars';
 import { PixelTransition } from '../common/PixelTransition';
 
 const TAB_INDEX_MAP = {
@@ -76,8 +75,6 @@ export const MainLayout = ({ children }) => {
       {/* Webflow Style Pixel Transition overlay on tab switch */}
       <PixelTransition activeKey={activeTab} />
 
-      {/* Background Shooting Star Animation */}
-      <ShootingStars />
       {/* FIXED LEFT SIDEBAR: Never moves during tab transitions */}
       <Sidebar />
 

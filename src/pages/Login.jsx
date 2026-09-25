@@ -16,7 +16,6 @@ import {
   Lock,
 } from 'lucide-react';
 import { useFinancial } from '../context/FinancialContext';
-import { ShootingStars } from '../components/common/ShootingStars';
 
 export const Login = () => {
   const { login, supportedCurrencies } = useFinancial();
@@ -131,8 +130,6 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between p-4 md:p-8 relative overflow-hidden selection:bg-indigo-500 selection:text-white">
-      {/* Background Shooting Star Animation */}
-      <ShootingStars />
       {/* Ambient background glowing radial blobs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
