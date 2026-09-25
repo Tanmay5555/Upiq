@@ -34,7 +34,7 @@
 export DB_URL=jdbc:postgresql://localhost:5432/upiq
 export DB_USERNAME=postgres
 export DB_PASSWORD=yourpassword
-export JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+export JWT_SECRET=your_jwt_secret_key_min_256_bits
 
 # 2. Start PostgreSQL (if using Docker)
 docker run -d \
@@ -63,7 +63,7 @@ docker run -d \
   -e DB_URL=jdbc:postgresql://host.docker.internal:5432/upiq \
   -e DB_USERNAME=postgres \
   -e DB_PASSWORD=yourpassword \
-  -e JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970 \
+  -e JWT_SECRET=your_jwt_secret_key_min_256_bits \
   -e SPRING_PROFILES_ACTIVE=prod \
   upiq-backend
 ```
@@ -383,7 +383,7 @@ file: <binary-file-data>
    DB_URL=<internal-database-url>
    DB_USERNAME=<db-username>
    DB_PASSWORD=<db-password>
-   JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+   JWT_SECRET=your_jwt_secret_key_min_256_bits
    SPRING_PROFILES_ACTIVE=prod
    ```
 
@@ -476,7 +476,7 @@ eb deploy
 | `DB_URL` | ✅ | PostgreSQL connection URL | `jdbc:postgresql://localhost:5432/upiq` |
 | `DB_USERNAME` | ✅ | Database username | `postgres` |
 | `DB_PASSWORD` | ✅ | Database password | `yourpassword` |
-| `JWT_SECRET` | ✅ | JWT signing secret (min 256 bits) | `404E635266556A586E3272...` |
+| `JWT_SECRET` | ✅ | JWT signing secret (min 256 bits) | `<your-256-bit-secret>` |
 | `SPRING_PROFILES_ACTIVE` | ❌ | Active profile (default/prod) | `prod` |
 | `SERVER_PORT` | ❌ | Application port | `8080` |
 
