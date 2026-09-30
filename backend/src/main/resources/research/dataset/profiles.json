@@ -1,0 +1,29 @@
+[
+  {
+    "id": "profile_01",
+    "email": "research.profile01@upiq.invalid",
+    "username": "research_profile_01",
+    "full_name": "Priya Sharma",
+    "city": "Bengaluru",
+    "occupation": "Software engineer",
+    "notes": "Salaried monthly income, regular UPI food and transit spend, streaming subscriptions."
+  },
+  {
+    "id": "profile_02",
+    "email": "research.profile02@upiq.invalid",
+    "username": "research_profile_02",
+    "full_name": "Arjun Mehta",
+    "city": "Pune",
+    "occupation": "Operations manager",
+    "notes": "Household spending with higher groceries, utilities, and healthcare."
+  },
+  {
+    "id": "profile_03",
+    "email": "research.profile03@upiq.invalid",
+    "username": "research_profile_03",
+    "full_name": "Ananya Reddy",
+    "city": "Hyderabad",
+    "occupation": "Freelance designer",
+    "notes": "Irregular client income, variable shopping and entertainment spend."
+  }
+]

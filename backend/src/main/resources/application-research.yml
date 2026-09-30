@@ -1,0 +1,45 @@
+# EXPERIMENTAL / local research profile.
+#
+# This profile points Hibernate at a dedicated local database so synthetic
+# research users are NEVER written to production Neon.
+#
+# Create the database once:
+#   CREATE DATABASE upiq_research;
+#
+# Seed (PowerShell):
+#   $env:SPRING_PROFILES_ACTIVE="research"
+#   $env:RESEARCH_SEEDING_ENABLED="true"
+#   $env:RESEARCH_DB_URL="jdbc:postgresql://localhost:5432/upiq_research"
+#   $env:RESEARCH_DB_USERNAME="postgres"
+#   $env:RESEARCH_DB_PASSWORD="yourpassword"
+#   mvn spring-boot:run
+#
+# Seed (bash):
+#   SPRING_PROFILES_ACTIVE=research \
+#   RESEARCH_SEEDING_ENABLED=true \
+#   RESEARCH_DB_URL=jdbc:postgresql://localhost:5432/upiq_research \
+#   RESEARCH_DB_USERNAME=postgres \
+#   RESEARCH_DB_PASSWORD=yourpassword \
+#   mvn spring-boot:run
+#
+# Leave RESEARCH_SEEDING_ENABLED unset/false to start the research profile
+# without inserting rows.
+#
+# Do not set RESEARCH_DB_URL to a Neon or production JDBC URL. The seeder
+# will refuse known production host substrings and abort startup.
+
+spring:
+  datasource:
+    url: ${RESEARCH_DB_URL:jdbc:postgresql://localhost:5432/upiq_research}
+    username: ${RESEARCH_DB_USERNAME:postgres}
+    password: ${RESEARCH_DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+research:
+  seeding:
+    enabled: ${RESEARCH_SEEDING_ENABLED:false}
+    require-research-profile: true

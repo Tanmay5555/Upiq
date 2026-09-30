@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: upiq-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:upiq}}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:local_dev_secret_key_minimum_256_bits_for_upiq_2_0_local_development_only}
+  expiration: 86400000 # 24 hours
+
+logging:
+  level:
+    root: INFO
+    com.upiq: DEBUG
+    org.springframework.security: INFO
+
+# EXPERIMENTAL research dataset. Never enable this against the production Neon database.
+# Seeding is also gated on Spring profile "research" (see application-research.yml).
+research:
+  seeding:
+    enabled: false
+    require-research-profile: true
+    user-password: research-only-not-for-production
+    blocked-datasource-substrings:
+      - neon.tech
+      - neon.database
+      - upiq-prod
+
+ollama:
+  base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+  model: ${OLLAMA_MODEL:}
+  temperature: ${OLLAMA_TEMPERATURE:0.0}
+  timeout: ${OLLAMA_TIMEOUT:60s}
