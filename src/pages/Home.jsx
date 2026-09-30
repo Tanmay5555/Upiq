@@ -11,7 +11,6 @@ import {
   FileText,
   TrendingUp,
   BrainCircuit,
-  HelpCircle,
   LogIn,
   Sun,
   Moon,
@@ -20,7 +19,6 @@ import {
   UserCheck,
   ShieldAlert,
   X,
-  CheckCircle2,
 } from 'lucide-react';
 import { useFinancial } from '../context/FinancialContext';
 import { useTheme } from '../context/ThemeContext';
@@ -153,11 +151,11 @@ export const Home = () => {
             </div>
           </div>
 
-          {/* NAVBAR OPTIONS (Features, Security, Currency, Need Help) */}
-          <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/90 border border-slate-800">
+          {/* NAVBAR OPTIONS (Features, Security, Global Currency, Need Help) */}
+          <nav className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/90 border border-slate-800">
             <button
               onClick={() => setActiveModal('features')}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeModal === 'features'
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
@@ -168,7 +166,7 @@ export const Home = () => {
 
             <button
               onClick={() => setActiveModal('security')}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeModal === 'security'
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
@@ -179,7 +177,7 @@ export const Home = () => {
 
             <button
               onClick={() => setActiveModal('currency')}
-              className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeModal === 'currency'
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
@@ -190,31 +188,16 @@ export const Home = () => {
 
             <button
               onClick={handleNeedHelpClick}
-              className="px-4 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-600/30 hover:opacity-90"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md shadow-purple-600/30 hover:opacity-90"
             >
               <Sparkles className="w-3.5 h-3.5 text-yellow-300 animate-pulse" />
-              <span>Need Help / AI</span>
+              <span className="hidden sm:inline">Need Help / AI</span>
+              <span className="sm:hidden">AI Help</span>
             </button>
           </nav>
 
           {/* Right Action Bar */}
           <div className="flex items-center gap-3">
-            {/* Currency Dropdown Selector */}
-            <div className="hidden sm:flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs">
-              <Globe className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <select
-                value={selectedCurrencyCode}
-                onChange={(e) => updateCurrency(e.target.value)}
-                className="bg-transparent text-slate-200 font-semibold focus:outline-none cursor-pointer"
-              >
-                {supportedCurrencies.map((c) => (
-                  <option key={c.code} value={c.code} className="bg-slate-900 text-slate-100">
-                    {c.symbol} {c.code}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -230,7 +213,7 @@ export const Home = () => {
                 onClick={() => navigateToApp('dashboard')}
                 className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all cursor-pointer"
               >
-                <span>Go to App Dashboard</span>
+                <span>Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
@@ -448,11 +431,11 @@ export const Home = () => {
                       <Globe className="w-3.5 h-3.5" /> Global Currency Engine
                     </div>
                     <h2 className="text-2xl font-extrabold text-slate-100">Multi-Currency Country Converter</h2>
-                    <p className="text-xs text-slate-400">Switch display currency anytime with instant recalculation across all transaction views.</p>
+                    <p className="text-xs text-slate-400">Select display currency or convert amounts in real-time across supported global currencies.</p>
                   </div>
 
                   <div className="p-4 rounded-2xl glass-panel border border-indigo-500/20 space-y-4">
-                    <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider">Select Currency:</p>
+                    <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider">Select Preferred Currency:</p>
                     <div className="flex flex-wrap gap-2.5">
                       {supportedCurrencies.map((c) => (
                         <button
