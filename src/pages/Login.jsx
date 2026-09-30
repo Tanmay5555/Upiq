@@ -14,9 +14,9 @@ import { useFinancial } from '../context/FinancialContext';
 export const Login = () => {
   const { login, supportedCurrencies, navigateToHome, postLoginRedirect } = useFinancial();
 
-  const [name, setName] = useState('Varsha Sharma');
-  const [vpa, setVpa] = useState('varsha.s@upiq.ai');
-  const [password, setPassword] = useState('••••••••••••');
+  const [name, setName] = useState('');
+  const [vpa, setVpa] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('INR');
   const [selectedCountry, setSelectedCountry] = useState('India');
   const [showPassword, setShowPassword] = useState(false);
