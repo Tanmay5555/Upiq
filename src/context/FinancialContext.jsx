@@ -47,6 +47,13 @@ export const FinancialProvider = ({ children }) => {
   const [reports, setReports] = useState(initialReports);
   const [adminMetrics, setAdminMetrics] = useState(initialAdminMetrics);
 
+  // View routing states: 'home' | 'login' | 'app'
+  const [currentView, setCurrentView] = useState(() => {
+    const isAuth = getInitialState('auth', false);
+    return isAuth ? 'app' : 'home';
+  });
+  const [postLoginRedirect, setPostLoginRedirect] = useState('dashboard');
+
   // UI interaction states
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isFraudDrawerOpen, setIsFraudDrawerOpen] = useState(false);
@@ -67,6 +74,33 @@ export const FinancialProvider = ({ children }) => {
       return;
     }
     setActiveTab(tab);
+    setCurrentView('app');
+  };
+
+  // View Navigation Helpers
+  const navigateToHome = () => {
+    setCurrentView('home');
+  };
+
+  const navigateToLogin = (targetTab = 'dashboard') => {
+    setPostLoginRedirect(targetTab);
+    setCurrentView('login');
+  };
+
+  const navigateToApp = (tab) => {
+    if (tab) setActiveTab(tab);
+    setCurrentView('app');
+  };
+
+  const handleNeedHelpClick = () => {
+    if (isAuthenticated) {
+      setActiveTab('ai-assistant');
+      setCurrentView('app');
+    } else {
+      setPostLoginRedirect('ai-assistant');
+      setCurrentView('login');
+      addToast('Sign In Required', 'Please sign in to launch the AI Financial Assistant session', 'info');
+    }
   };
 
   // Sync state to localStorage whenever changed
@@ -89,7 +123,6 @@ export const FinancialProvider = ({ children }) => {
     if (typeof amountInUSD !== 'number' || isNaN(amountInUSD)) return `${currentCurrency.symbol}0.00`;
     const converted = amountInUSD * currentCurrency.rate;
 
-    // Formatting based on currency locale
     if (currentCurrency.code === 'JPY') {
       return `${currentCurrency.symbol}${Math.round(converted).toLocaleString()}`;
     }
@@ -139,11 +172,10 @@ export const FinancialProvider = ({ children }) => {
     setProfile(updatedProfile);
     setIsAuthenticated(true);
 
-    if (isAdmin) {
-      setActiveTab('admin');
-    } else {
-      setActiveTab('dashboard');
-    }
+    const destinationTab = postLoginRedirect || (isAdmin ? 'admin' : 'dashboard');
+    setActiveTab(destinationTab);
+    setCurrentView('app');
+    setPostLoginRedirect('dashboard');
 
     try {
       localStorage.setItem('upiq_auth', JSON.stringify(true));
@@ -171,6 +203,7 @@ export const FinancialProvider = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setActiveTab('dashboard');
+    setCurrentView('home');
     try {
       localStorage.removeItem('upiq_auth');
       localStorage.removeItem('upiq_token');
@@ -335,6 +368,7 @@ export const FinancialProvider = ({ children }) => {
   const triggerAiQuery = (query) => {
     setAiPromptQuery(query);
     setActiveTab('ai-assistant');
+    setCurrentView('app');
   };
 
   return (
@@ -362,6 +396,13 @@ export const FinancialProvider = ({ children }) => {
         adminMetrics,
         activeTab,
         setActiveTab: changeActiveTab,
+        currentView,
+        setCurrentView,
+        navigateToHome,
+        navigateToLogin,
+        navigateToApp,
+        handleNeedHelpClick,
+        postLoginRedirect,
         isFraudDrawerOpen,
         setIsFraudDrawerOpen,
         aiPromptQuery,

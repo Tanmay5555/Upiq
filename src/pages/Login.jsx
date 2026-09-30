@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   Globe,
   ArrowRight,
+  ArrowLeft,
   Bot,
   Zap,
   LockKeyhole,
@@ -18,7 +19,7 @@ import {
 import { useFinancial } from '../context/FinancialContext';
 
 export const Login = () => {
-  const { login, supportedCurrencies } = useFinancial();
+  const { login, supportedCurrencies, navigateToHome, postLoginRedirect } = useFinancial();
 
   const [name, setName] = useState('Varsha Sharma');
   const [vpa, setVpa] = useState('varsha.s@upiq.ai');
@@ -142,7 +143,7 @@ export const Login = () => {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className="w-full max-w-7xl mx-auto flex items-center justify-between py-4 px-6 rounded-2xl glass-panel border border-slate-800/80 mb-8 z-20 backdrop-blur-xl"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={navigateToHome}>
           <img
             src="/upiq-logo.jpg"
             alt="UPIQ AI Logo"
@@ -153,14 +154,16 @@ export const Login = () => {
           </span>
         </div>
 
-        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-400">
-          <a href="#features" className="hover:text-white transition-colors">Features</a>
-          <a href="#security" className="hover:text-white transition-colors">Security</a>
-          <a href="#currencies" className="hover:text-white transition-colors">Global Currencies</a>
-        </nav>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={navigateToHome}
+            className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-xs font-bold flex items-center gap-2 transition-all cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 text-indigo-400" />
+            <span>Back to Home Page</span>
+          </button>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+          <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             System Online
           </span>
@@ -172,7 +175,7 @@ export const Login = () => {
         <AnimatePresence mode="wait">
           {!isSubmitting && (
             <React.Fragment key="login-split-view">
-              {/* LEFT COMPONENT: Features & Branding (Slides from/to LEFT direction) */}
+              {/* LEFT COMPONENT: Features & Branding */}
               <motion.div
                 variants={leftSpringVariant}
                 initial="hidden"
@@ -275,7 +278,7 @@ export const Login = () => {
                 </div>
               </motion.div>
 
-              {/* RIGHT COMPONENT: Interactive Login Form Card (Slides from/to RIGHT direction) */}
+              {/* RIGHT COMPONENT: Interactive Login Form Card */}
               <motion.div
                 variants={rightSpringVariant}
                 initial="hidden"
@@ -286,6 +289,14 @@ export const Login = () => {
                 <div className="rounded-3xl glass-panel-glow border border-slate-800/80 p-6 md:p-8 space-y-6 bg-slate-900/90 backdrop-blur-xl shadow-2xl relative overflow-hidden">
                   {/* Top Rim Lighting */}
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+
+                  {/* AI Assistant Special Redirect Banner */}
+                  {postLoginRedirect === 'ai-assistant' && (
+                    <div className="p-3 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs flex items-center gap-2.5 animate-pulse">
+                      <Sparkles className="w-4 h-4 text-yellow-300 shrink-0" />
+                      <span>Sign in to launch your <strong>AI Assistant</strong> session directly!</span>
+                    </div>
+                  )}
 
                   <div className="text-center space-y-2">
                     <img
@@ -488,7 +499,9 @@ export const Login = () => {
 
       {/* Footer */}
       <footer className="w-full max-w-7xl mx-auto pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2 z-10">
-        <span>© 2026 UPIQ Financial OS</span>
+        <button onClick={navigateToHome} className="hover:text-slate-300 transition-colors">
+          © 2026 UPIQ Financial OS — Back to Home
+        </button>
         <span>Thoughtful tools for money in motion</span>
         <a href="mailto:support@upiq.ai" className="hover:text-indigo-400 transition-colors">
           Need help? &rarr;
