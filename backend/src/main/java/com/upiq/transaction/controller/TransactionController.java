@@ -4,6 +4,8 @@ import com.upiq.auth.model.User;
 import com.upiq.config.ApiResponse;
 import com.upiq.transaction.dto.CreateTransactionRequest;
 import com.upiq.transaction.dto.TransactionResponse;
+import com.upiq.transaction.categorization.CategorizationBatchResponse;
+import com.upiq.transaction.categorization.TransactionCategorizationService;
 import com.upiq.transaction.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class TransactionController {
 
         private final TransactionService service;
+        private final TransactionCategorizationService categorizationService;
 
         // ------------------- ADD TRANSACTION -------------------
         @PostMapping
@@ -60,6 +63,14 @@ public class TransactionController {
                                 .message("Transactions retrieved successfully")
                                 .build();
                 return ResponseEntity.ok(response);
+        }
+
+        @PostMapping("/categorize-uncategorized")
+        public ResponseEntity<ApiResponse<CategorizationBatchResponse>> categorizeUncategorized(
+                        @AuthenticationPrincipal User user) {
+                CategorizationBatchResponse result = categorizationService.categorizeUncategorized(user.getId());
+                return ResponseEntity.ok(ApiResponse.success(result,
+                                "Uncategorized transactions processed"));
         }
 
         // ------------------- GET TRANSACTION BY ID -------------------

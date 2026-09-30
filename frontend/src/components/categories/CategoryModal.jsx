@@ -26,19 +26,18 @@ const CategoryModal = ({ isOpen, onClose, category, onSave }) => {
                 type: category.type || "expense",
                 description: category.description || "",
                 color: category.color || categoryColor.value,
-                icon: category.icon || getCategoryIcon(category.name)
+                icon: category.icon || ""
             });
             const existingBudget = getBudget(category.name);
             setBudgetAmount(existingBudget ? existingBudget.toString() : "");
         } else {
             const defaultColor = CATEGORY_COLORS[0].value;
-            const defaultIcon = CATEGORY_ICONS[0];
             setFormData({
                 name: "",
                 type: "expense",
                 description: "",
                 color: defaultColor,
-                icon: defaultIcon
+                icon: ""
             });
             setBudgetAmount("");
         }
@@ -185,7 +184,7 @@ const CategoryModal = ({ isOpen, onClose, category, onSave }) => {
                                         onClick={() => setFormData({ ...formData, icon })}
                                         className={clsx(
                                             "w-10 h-10 rounded-xl text-xl flex items-center justify-center transition-all",
-                                            formData.icon === icon
+                                            getCategoryIcon(formData.name, formData.icon) === icon
                                                 ? "bg-[var(--bg-card)] text-[var(--text-main)] shadow-premium border border-[var(--border-base)] scale-110"
                                                 : "text-[var(--text-muted)] hover:bg-[var(--bg-card)]/50 hover:text-[var(--text-main)]"
                                         )}

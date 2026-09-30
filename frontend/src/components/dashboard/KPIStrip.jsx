@@ -14,6 +14,7 @@ const KPIStrip = ({ transactions }) => {
     {
       label: "Balance",
       value: `₹${balance.toLocaleString('en-IN')}`,
+      supporting: "Income minus expenses",
       icon: Wallet,
       bgColor: "bg-gradient-to-br from-blue-500 to-blue-600",
       trend: null
@@ -21,6 +22,7 @@ const KPIStrip = ({ transactions }) => {
     {
       label: "Income",
       value: `₹${income.toLocaleString('en-IN')}`,
+      supporting: `${transactions.filter((item) => item.type?.toLowerCase() === 'income').length} recorded entries`,
       icon: TrendingUp,
       bgColor: "bg-gradient-to-br from-green-500 to-green-600",
       trend: null
@@ -28,6 +30,7 @@ const KPIStrip = ({ transactions }) => {
     {
       label: "Expenses",
       value: `₹${expenses.toLocaleString('en-IN')}`,
+      supporting: momComparison ? "Compared with previous month" : "Across the selected period",
       icon: TrendingDown,
       bgColor: "bg-gradient-to-br from-red-500 to-red-600",
       trend: momComparison
@@ -35,6 +38,7 @@ const KPIStrip = ({ transactions }) => {
     {
       label: "Savings Rate",
       value: `${savingsRate.toFixed(1)}%`,
+      supporting: "Net balance as a share of income",
       icon: Percent,
       bgColor: "bg-gradient-to-br from-purple-500 to-purple-600",
       trend: savingsRate >= 20 ? { direction: 'up', change: savingsRate } : savingsRate >= 10 ? { direction: 'neutral', change: savingsRate } : { direction: 'down', change: savingsRate }
@@ -42,7 +46,7 @@ const KPIStrip = ({ transactions }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-4 xl:gap-5">
       {kpis.map((kpi, index) => {
         const Icon = kpi.icon;
         const trend = kpi.trend;
@@ -50,7 +54,7 @@ const KPIStrip = ({ transactions }) => {
         return (
           <div
             key={index}
-            className="bg-[var(--bg-card)] rounded-2xl shadow-premium border border-[var(--border-base)] p-6 hover:shadow-premium-hover transition-all duration-300 group"
+            className="relative overflow-hidden bg-[var(--bg-card)] rounded-2xl shadow-premium border border-[var(--border-base)] p-5 sm:p-6 hover:shadow-premium-hover transition-all duration-300 group"
           >
             <div className="flex items-start justify-between mb-4">
               <div className="p-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-base)] text-primary-600 dark:text-primary-400">
@@ -77,9 +81,10 @@ const KPIStrip = ({ transactions }) => {
               <p className="text-[var(--text-muted)] text-sm font-medium opacity-80">
                 {kpi.label}
               </p>
-              <h2 className="text-3xl font-bold mt-1 text-[var(--text-main)] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black mt-1 text-[var(--text-main)] tracking-tight break-words">
                 {kpi.value}
               </h2>
+              <p className="mt-2 text-xs text-[var(--text-muted)]">{kpi.supporting}</p>
             </div>
           </div>
         );

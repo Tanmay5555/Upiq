@@ -19,7 +19,6 @@ public class CreateTransactionRequest {
     @Pattern(regexp = "^(?i)(income|expense)$", message = "Type must be 'income' or 'expense'")
     private String type;
 
-    @NotBlank(message = "Category is required")
     private String category;
 
     private String description;

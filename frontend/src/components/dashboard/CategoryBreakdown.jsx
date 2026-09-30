@@ -1,13 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { getCategoryExpenseBreakdown } from '../../utils/transactionUtils';
-import { getCategoryColor } from '../../utils/categoryUtils';
+import { getCategoryColor, getCategoryIcon } from '../../utils/categoryUtils';
 
 const CategoryBreakdown = ({ transactions }) => {
   const breakdown = getCategoryExpenseBreakdown(transactions);
 
   if (breakdown.length === 0) {
     return (
-      <div className="bg-[var(--bg-card)] p-8 rounded-2xl border border-[var(--border-base)] shadow-premium h-96 flex flex-col items-center justify-center">
+      <div className="bg-[var(--bg-card)] p-6 sm:p-8 rounded-2xl border border-[var(--border-base)] shadow-premium min-h-80 flex flex-col items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 bg-[var(--bg-surface)] rounded-full flex items-center justify-center mx-auto mb-4 border border-[var(--border-base)]">
             <PieChart size={32} className="text-[var(--text-muted)]" />
@@ -47,14 +47,14 @@ const CategoryBreakdown = ({ transactions }) => {
   };
 
   return (
-    <div className="bg-[var(--bg-card)] p-8 rounded-2xl border border-[var(--border-base)] shadow-premium hover:shadow-premium-hover transition-all duration-300">
+    <div className="bg-[var(--bg-card)] p-5 sm:p-7 rounded-2xl border border-[var(--border-base)] shadow-premium hover:shadow-premium-hover transition-all duration-300 min-w-0">
       <div className="mb-8">
         <h3 className="text-lg font-bold text-[var(--text-main)] mb-1 tracking-tight">Category Breakdown</h3>
         <p className="text-sm text-[var(--text-muted)]">Expense distribution by category</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div className="h-72">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 xl:gap-8 items-center">
+        <div className="h-64 sm:h-72 min-w-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -76,7 +76,7 @@ const CategoryBreakdown = ({ transactions }) => {
         </div>
 
         <div className="space-y-5">
-          {breakdown.slice(0, 5).map((item, index) => {
+          {breakdown.slice(0, 6).map((item, index) => {
             const percentage = ((item.amount / total) * 100).toFixed(1);
             const colorInfo = getCategoryColor(item.name);
             return (
@@ -87,7 +87,8 @@ const CategoryBreakdown = ({ transactions }) => {
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ backgroundColor: colorInfo.value }}
                     />
-                    <span className="text-sm font-medium text-[var(--text-main)]">{item.name}</span>
+                    <span className="text-lg leading-none" aria-hidden="true">{getCategoryIcon(item.name)}</span>
+                    <span className="text-sm font-medium text-[var(--text-main)] truncate">{item.name}</span>
                   </div>
                   <div className="text-right">
                     <span className="text-sm font-bold text-[var(--text-main)]">

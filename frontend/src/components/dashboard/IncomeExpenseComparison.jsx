@@ -20,7 +20,7 @@ const IncomeExpenseComparison = ({ transactions }) => {
 
   if (income === 0 && expenses === 0) {
     return (
-      <div className="bg-[var(--bg-card)] p-8 rounded-2xl border border-[var(--border-base)] shadow-premium h-80 flex flex-col items-center justify-center">
+      <div className="bg-[var(--bg-card)] p-6 sm:p-8 rounded-2xl border border-[var(--border-base)] shadow-premium min-h-80 flex flex-col items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 bg-[var(--bg-surface)] rounded-full flex items-center justify-center mx-auto mb-4 border border-[var(--border-base)]">
             <BarChart size={32} className="text-[var(--text-muted)]" />
@@ -48,13 +48,13 @@ const IncomeExpenseComparison = ({ transactions }) => {
   };
 
   return (
-    <div className="bg-[var(--bg-card)] p-6 lg:p-8 rounded-2xl border border-[var(--border-base)] shadow-premium hover:shadow-premium-hover transition-all duration-300">
-      <div className="mb-8">
+    <div className="min-w-0 bg-[var(--bg-card)] p-5 sm:p-7 rounded-2xl border border-[var(--border-base)] shadow-premium hover:shadow-premium-hover transition-all duration-300">
+      <div className="mb-5 sm:mb-7">
         <h3 className="text-lg font-bold text-[var(--text-main)] mb-1 tracking-tight">Income vs Expenses</h3>
-        <p className="text-sm text-[var(--text-muted)]">Compare your total income and expenses</p>
+        <p className="text-sm text-[var(--text-muted)]">Compare cash flow for the selected period</p>
       </div>
 
-      <div className="h-64 sm:h-72">
+      <div className="h-60 min-w-0 sm:h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 20, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-base)" opacity={0.5} />

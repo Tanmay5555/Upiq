@@ -10,6 +10,8 @@ import { Search, AlertCircle } from "lucide-react";
 const Transactions = () => {
     const [allTransactions, setAllTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [categorizing, setCategorizing] = useState(false);
+    const [categorizationMessage, setCategorizationMessage] = useState("");
     const { startDate, endDate, resetToAllTime } = useDateFilter();
     const [filters, setFilters] = useState({
         search: "",
@@ -88,6 +90,23 @@ const Transactions = () => {
         }
     };
 
+    const handleCategorizeUncategorized = async () => {
+        setCategorizing(true);
+        setCategorizationMessage("");
+        try {
+            const response = await TransactionService.categorizeUncategorized();
+            await fetchTransactions();
+            const result = response.data;
+            setCategorizationMessage(
+                `Categorized ${result.categorized} of ${result.transactionsProcessed} transactions. ${result.remainingUncategorized} remain Uncategorized.`
+            );
+        } catch {
+            setCategorizationMessage("Unable to categorize transactions. Please try again.");
+        } finally {
+            setCategorizing(false);
+        }
+    };
+
     // Filter Logic (applied to date-filtered transactions)
     const filteredTransactions = useMemo(() => {
         return dateFilteredTransactions.filter(t => {
@@ -110,6 +129,13 @@ const Transactions = () => {
                 <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
                     <DateRangeFilter />
                     <button
+                        onClick={handleCategorizeUncategorized}
+                        disabled={categorizing}
+                        className="px-3 sm:px-4 py-2 text-primary-600 bg-primary-500/10 border border-primary-500/20 rounded-xl hover:bg-primary-500/20 disabled:opacity-60 transition-all font-bold text-[10px] sm:text-xs uppercase tracking-wider"
+                    >
+                        {categorizing ? "Categorizing..." : "Categorize Uncategorized"}
+                    </button>
+                    <button
                         onClick={handleDeleteAll}
                         className="px-3 sm:px-4 py-2 text-rose-500 bg-rose-500/10 border border-rose-500/20 rounded-xl hover:bg-rose-500/20 transition-all font-bold text-[10px] sm:text-xs uppercase tracking-wider"
                     >
@@ -117,6 +143,10 @@ const Transactions = () => {
                     </button>
                 </div>
             </div>
+
+            {categorizationMessage && (
+                <p role="status" className="text-sm text-[var(--text-muted)]">{categorizationMessage}</p>
+            )}
 
             {/* Filters */}
             <div className="bg-[var(--bg-card)] p-3 sm:p-4 rounded-2xl border border-[var(--border-base)] shadow-premium flex flex-col md:flex-row gap-3 sm:gap-4">

@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import UploadPDF from "../pages/UploadPDF";
 import Transactions from "../pages/Transactions";
 import Categories from "../pages/Categories";
+import FinancialAssistant from "../pages/FinancialAssistant";
 import MainLayout from "../components/layout/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -23,6 +24,7 @@ const AppRoutes = () => {
             <Route path="/upload" element={<UploadPDF />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/chat" element={<FinancialAssistant />} />
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             {/* Add other protected routes here */}
           </Route>

@@ -17,12 +17,30 @@ export const CATEGORY_COLORS = [
   { name: 'Teal', value: '#14b8a6', bg: 'bg-teal-100 dark:bg-teal-900/30', text: 'text-teal-800 dark:text-teal-200', border: 'border-teal-200 dark:border-teal-800/50' },
 ];
 
-// Predefined emoji/icons for categories
+// Predefined emoji choices for the category editor.
 export const CATEGORY_ICONS = [
   '💰', '💸', '🍔', '🚗', '🏠', '👕', '💊', '🎓', '🎮', '📱',
   '✈️', '🍕', '☕', '🎬', '🏋️', '💼', '🎁', '💳', '📚', '🎨',
   '🏥', '🎵', '🌮', '🍺', '🚌', '🏖️', '🛒', '💻', '📺', '🎯'
 ];
+
+// Stable defaults used throughout the app. A user-selected stored icon still takes precedence.
+export const CATEGORY_ICON_BY_NAME = Object.freeze({
+  food: '🍔',
+  groceries: '🛒',
+  shopping: '🛍️',
+  transport: '🚗',
+  'bills & utilities': '💡',
+  entertainment: '🎬',
+  health: '❤️',
+  rent: '🏠',
+  education: '🎓',
+  travel: '✈️',
+  fuel: '⛽',
+  insurance: '🛡️',
+  'cash withdrawal': '💵',
+  other: '📦',
+});
 
 /**
  * Get a consistent color for a category name
@@ -45,12 +63,8 @@ export const getCategoryColor = (categoryName, customColor = null) => {
  * Get a consistent icon/emoji for a category
  */
 export const getCategoryIcon = (categoryName, customIcon = null) => {
-  if (customIcon) return customIcon;
-
-  // Hash function for consistent icon assignment
-  if (!categoryName) return CATEGORY_ICONS[0];
-  const index = categoryName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % CATEGORY_ICONS.length;
-  return CATEGORY_ICONS[index];
+  const normalizedName = categoryName?.trim().toLowerCase() || '';
+  return CATEGORY_ICON_BY_NAME[normalizedName] || customIcon || CATEGORY_ICON_BY_NAME.other;
 };
 
 /**

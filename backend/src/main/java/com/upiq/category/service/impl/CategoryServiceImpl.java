@@ -41,6 +41,24 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
+    public void ensureCategoryExists(String name, String type, Long userId) {
+        if (name == null || name.isBlank() || "Uncategorized".equalsIgnoreCase(name.trim())) {
+            return;
+        }
+        if (categoryRepository.existsByUserIdAndNameIgnoreCase(userId, name.trim())) {
+            return;
+        }
+
+        Category category = Category.builder()
+                .name(name.trim())
+                .type("income".equalsIgnoreCase(type) ? "income" : "expense")
+                .userId(userId)
+                .build();
+        categoryRepository.save(category);
+    }
+
+    @Override
     public List<CategoryResponse> getAllCategories(Long userId) {
         List<Category> categories = categoryRepository.findByUserId(userId);
         return categories.stream()

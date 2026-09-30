@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, ListOrdered, Upload, Tag, LogOut, X } from "lucide-react";
+import { LayoutDashboard, ListOrdered, Upload, Tag, LogOut, X, MessageCircle } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import clsx from "clsx";
 import logo from "../../assets/logo.png";
@@ -14,6 +14,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         { name: "Transactions", path: "/transactions", icon: ListOrdered },
         { name: "Upload PDF", path: "/upload", icon: Upload },
         { name: "Categories", path: "/categories", icon: Tag },
+        { name: "Financial Assistant", path: "/chat", icon: MessageCircle },
     ];
 
     return (

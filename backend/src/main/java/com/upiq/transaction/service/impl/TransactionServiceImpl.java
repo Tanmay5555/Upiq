@@ -1,7 +1,11 @@
 package com.upiq.transaction.service.impl;
 
+import com.upiq.category.service.CategoryService;
 import com.upiq.transaction.dto.CreateTransactionRequest;
 import com.upiq.transaction.dto.TransactionResponse;
+import com.upiq.transaction.categorization.CategorizationConfidence;
+import com.upiq.transaction.categorization.SmartCategorizationResult;
+import com.upiq.transaction.categorization.SmartCategorizationService;
 import com.upiq.transaction.exceptions.TransactionNotFoundException;
 import com.upiq.transaction.model.Transaction;
 import com.upiq.transaction.repository.TransactionRepository;
@@ -21,12 +25,14 @@ import java.util.stream.Collectors;
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository repository;
+    private final SmartCategorizationService categorizationService;
+    private final CategoryService categoryService;
 
     @Override
     public TransactionResponse addTransaction(CreateTransactionRequest request, Long userId) {
         Transaction transaction = Transaction.builder()
                 .amount(request.getAmount())
-                .category(request.getCategory())
+                .category(resolveCategory(request, userId))
                 .description(request.getDescription())
                 .type(request.getType())
                 .paymentMethod(request.getPaymentMethod())
@@ -109,7 +115,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         transaction.setAmount(request.getAmount());
-        transaction.setCategory(request.getCategory());
+        transaction.setCategory(resolveCategory(request, userId));
         transaction.setDescription(request.getDescription());
         transaction.setType(request.getType());
         transaction.setPaymentMethod(request.getPaymentMethod());
@@ -143,5 +149,20 @@ public class TransactionServiceImpl implements TransactionService {
                 .date(transaction.getDate())
                 .paymentMethod(transaction.getPaymentMethod())
                 .build();
+    }
+
+    private String resolveCategory(CreateTransactionRequest request, Long userId) {
+        String requestedCategory = request.getCategory();
+        if (requestedCategory == null || requestedCategory.isBlank()
+                || "Uncategorized".equalsIgnoreCase(requestedCategory.trim())) {
+            SmartCategorizationResult result = categorizationService.categorize(
+                    request.getDescription(), null, request.getType());
+            if (result.confidence() != CategorizationConfidence.LOW
+                    && !"Uncategorized".equalsIgnoreCase(result.category())) {
+                categoryService.ensureCategoryExists(result.category(), request.getType(), userId);
+            }
+            return result.category();
+        }
+        return requestedCategory;
     }
 }

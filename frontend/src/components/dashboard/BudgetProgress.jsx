@@ -21,15 +21,15 @@ const BudgetProgress = ({ transactions }) => {
 
   if (budgetedCategories.length === 0) {
     return (
-      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+      <div className="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-base)] shadow-premium">
         <div className="mb-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">Budget Tracking</h3>
-          <p className="text-sm text-gray-500">Set budgets for categories to track your spending</p>
+          <h3 className="text-lg font-bold text-[var(--text-main)] mb-1">Budget Tracking</h3>
+          <p className="text-sm text-[var(--text-muted)]">Set budgets for categories to track your spending</p>
         </div>
         <div className="text-center py-8">
-          <Target size={48} className="text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500 mb-2">No budgets set yet</p>
-          <p className="text-sm text-gray-400">Go to Categories to set monthly budgets</p>
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--bg-surface)]"><Target size={28} className="text-[var(--text-muted)]" /></div>
+          <p className="text-[var(--text-main)] font-semibold mb-2">No budgets set yet</p>
+          <p className="text-sm text-[var(--text-muted)]">Go to Categories to set monthly budgets</p>
         </div>
       </div>
     );

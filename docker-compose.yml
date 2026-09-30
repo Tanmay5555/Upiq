@@ -11,7 +11,7 @@ services:
     volumes:
       - upiq-postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-upiq}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-upiq}" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -35,6 +35,10 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
       JWT_SECRET: ${JWT_SECRET}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-local}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-}
+      OLLAMA_TEMPERATURE: ${OLLAMA_TEMPERATURE:-0.0}
+      OLLAMA_TIMEOUT: ${OLLAMA_TIMEOUT:-60s}
     networks:
       - upiq-net
     restart: unless-stopped

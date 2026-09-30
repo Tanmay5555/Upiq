@@ -16,6 +16,11 @@ const TransactionService = {
         return response.data;
     },
 
+    categorizeUncategorized: async () => {
+        const response = await api.post("/transactions/categorize-uncategorized");
+        return response.data;
+    },
+
     async update(id, transactionData) {
         // PUT /api/transactions/{id}
         return api.put(`/transactions/${id}`, transactionData);
