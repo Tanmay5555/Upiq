@@ -5,7 +5,7 @@ import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
 
 export const FraudAlertDrawer = () => {
-  const { isFraudDrawerOpen, setIsFraudDrawerOpen, fraudAlerts, resolveFraudAlert } = useFinancial();
+  const { isFraudDrawerOpen, setIsFraudDrawerOpen, fraudAlerts, resolveFraudAlert, formatCurrency } = useFinancial();
 
   if (!isFraudDrawerOpen) return null;
 
@@ -70,7 +70,7 @@ export const FraudAlertDrawer = () => {
                       <p className="text-xs text-slate-400">{alert.merchant}</p>
                     </div>
                     <span className="text-base font-extrabold text-rose-400">
-                      -${alert.amount.toFixed(2)}
+                      -{formatCurrency(alert.amount)}
                     </span>
                   </div>
 

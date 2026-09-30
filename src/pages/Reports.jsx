@@ -7,7 +7,7 @@ import { Badge } from '../components/common/Badge';
 import { PDFPreviewModal } from '../components/reports/PDFPreviewModal';
 
 export const Reports = () => {
-  const { reports, addToast } = useFinancial();
+  const { reports, addToast, formatCurrency } = useFinancial();
   const [selectedMonth, setSelectedMonth] = useState('July 2026');
   const [selectedYear, setSelectedYear] = useState('2026');
   const [activeReportForPdf, setActiveReportForPdf] = useState(null);
@@ -81,19 +81,19 @@ export const Reports = () => {
             <div className="p-4 rounded-xl bg-slate-950/60 light:bg-slate-100 border border-slate-800 light:border-slate-200">
               <span className="text-xs text-slate-400 block font-semibold">Total Income</span>
               <span className="text-xl font-extrabold text-emerald-400 mt-1 block">
-                ${currentReport.totalIncome.toLocaleString()}
+                {formatCurrency(currentReport.totalIncome)}
               </span>
             </div>
             <div className="p-4 rounded-xl bg-slate-950/60 light:bg-slate-100 border border-slate-800 light:border-slate-200">
               <span className="text-xs text-slate-400 block font-semibold">Total Expenses</span>
               <span className="text-xl font-extrabold text-rose-400 mt-1 block">
-                ${currentReport.totalExpense.toLocaleString()}
+                {formatCurrency(currentReport.totalExpense)}
               </span>
             </div>
             <div className="p-4 rounded-xl bg-slate-950/60 light:bg-slate-100 border border-slate-800 light:border-slate-200">
               <span className="text-xs text-slate-400 block font-semibold">Net Savings</span>
               <span className="text-xl font-extrabold text-indigo-400 mt-1 block">
-                ${currentReport.netSavings.toLocaleString()}
+                {formatCurrency(currentReport.netSavings)}
               </span>
             </div>
             <div className="p-4 rounded-xl bg-slate-950/60 light:bg-slate-100 border border-slate-800 light:border-slate-200">
@@ -144,9 +144,9 @@ export const Reports = () => {
               {reports.map((r) => (
                 <tr key={r.id} className="hover:bg-slate-800/40 light:hover:bg-slate-100 transition-colors">
                   <td className="py-3 font-bold text-slate-200 light:text-slate-900">{r.month}</td>
-                  <td className="py-3 text-emerald-400 font-semibold">${r.totalIncome.toLocaleString()}</td>
-                  <td className="py-3 text-rose-400 font-semibold">${r.totalExpense.toLocaleString()}</td>
-                  <td className="py-3 text-indigo-400 font-semibold">${r.netSavings.toLocaleString()}</td>
+                  <td className="py-3 text-emerald-400 font-semibold">{formatCurrency(r.totalIncome)}</td>
+                  <td className="py-3 text-rose-400 font-semibold">{formatCurrency(r.totalExpense)}</td>
+                  <td className="py-3 text-indigo-400 font-semibold">{formatCurrency(r.netSavings)}</td>
                   <td className="py-3">
                     <Badge variant="success">{r.healthScore}/100</Badge>
                   </td>

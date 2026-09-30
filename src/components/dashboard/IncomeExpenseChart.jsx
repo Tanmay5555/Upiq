@@ -12,7 +12,7 @@ import { Card } from '../common/Card';
 import { useFinancial } from '../../context/FinancialContext';
 
 export const IncomeExpenseChart = () => {
-  const { trends } = useFinancial();
+  const { trends, formatCurrency } = useFinancial();
   const [timeRange, setTimeRange] = useState('6M');
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -24,15 +24,15 @@ export const IncomeExpenseChart = () => {
           </p>
           <p className="text-emerald-400 font-semibold flex items-center justify-between gap-4">
             <span>Income:</span>
-            <span>${payload[0]?.value?.toLocaleString()}</span>
+            <span>{formatCurrency(payload[0]?.value)}</span>
           </p>
           <p className="text-rose-400 font-semibold flex items-center justify-between gap-4">
             <span>Expense:</span>
-            <span>${payload[1]?.value?.toLocaleString()}</span>
+            <span>{formatCurrency(payload[1]?.value)}</span>
           </p>
           <p className="text-indigo-400 font-semibold flex items-center justify-between gap-4">
             <span>Savings:</span>
-            <span>${payload[2]?.value?.toLocaleString()}</span>
+            <span>{formatCurrency(payload[2]?.value)}</span>
           </p>
         </div>
       );

@@ -36,7 +36,7 @@ export const Transactions = () => {
     deleteTransaction,
   } = useTransactions();
 
-  const { setIsFraudDrawerOpen } = useFinancial();
+  const { setIsFraudDrawerOpen, formatCurrency } = useFinancial();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
@@ -221,7 +221,7 @@ export const Transactions = () => {
                     </td>
                     <td className="py-4 px-4 text-right font-extrabold text-sm">
                       <span className={tx.type === 'income' ? 'text-emerald-400' : 'text-slate-100 light:text-slate-900'}>
-                        {tx.type === 'income' ? '+' : '-'}${tx.amount.toFixed(2)}
+                        {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
                       </span>
                     </td>
                     <td className="py-4 px-4 text-center">

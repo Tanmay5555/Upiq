@@ -51,17 +51,17 @@ export const AIAssistant = () => {
         const diningTotal = transactions
           .filter((t) => t.category === 'Food & Dining')
           .reduce((acc, t) => acc + t.amount, 0);
-        replyText = `Based on your recent transactions, you have spent **$${diningTotal.toFixed(2)}** on **Food & Dining** this month across ${
+        replyText = `Based on your recent transactions, you have spent **${formatCurrency(diningTotal)}** on **Food & Dining** this month across ${
           transactions.filter((t) => t.category === 'Food & Dining').length
-        } transactions (including Starbucks, Whole Foods). You are at **86.3%** of your $1,100 dining budget.`;
+        } transactions (including Starbucks, Whole Foods). You are at **86.3%** of your ${formatCurrency(1100)} dining budget.`;
       } else if (lower.includes('budget') || lower.includes('track') || lower.includes('limit')) {
-        replyText = `Here is your AI Budget Analysis:\n\n• **Total Spent:** $${kpi.monthlyExpense.toFixed(2)} of $6,500 budgeted.\n• **Warning Category:** Shopping is currently **Over Budget** by $120.00.\n• **On Track:** Bills, Transport, and Entertainment are well within standard variance boundaries.`;
+        replyText = `Here is your AI Budget Analysis:\n\n• **Total Spent:** ${formatCurrency(kpi.monthlyExpense)} of ${formatCurrency(6500)} budgeted.\n• **Warning Category:** Shopping is currently **Over Budget** by ${formatCurrency(120)}.\n• **On Track:** Bills, Transport, and Entertainment are well within standard variance boundaries.`;
       } else if (lower.includes('irregular') || lower.includes('fraud') || lower.includes('suspicious') || lower.includes('anomaly')) {
-        replyText = `I have detected **2 irregular activities**:\n1. **$1,850.00** transfer to CryptoEx Global (Offshore IP, Risk Score 94%).\n2. **$19.99** duplicate charge from Netflix within 12 minutes.\n\nYou can review and freeze these from the **Suspicious Activity Center**.`;
+        replyText = `I have detected **2 irregular activities**:\n1. **${formatCurrency(1850)}** transfer to CryptoEx Global (Offshore IP, Risk Score 94%).\n2. **${formatCurrency(19.99)}** duplicate charge from Netflix within 12 minutes.\n\nYou can review and freeze these from the **Suspicious Activity Center**.`;
       } else if (lower.includes('summarize') || lower.includes('week') || lower.includes('month')) {
-        replyText = `**September Financial Summary:**\n- **Net Savings:** $${kpi.projectedSavings.toFixed(2)} (${kpi.savingsChange} vs Aug)\n- **Top Expense:** Rent & Housing ($1,800.00)\n- **Financial Health Score:** 94/100 (Optimal liquidity and debt management).`;
+        replyText = `**September Financial Summary:**\n- **Net Savings:** ${formatCurrency(kpi.projectedSavings)} (${kpi.savingsChange} vs Aug)\n- **Top Expense:** Rent & Housing (${formatCurrency(1800)})\n- **Financial Health Score:** 94/100 (Optimal liquidity and debt management).`;
       } else {
-        replyText = `I've analyzed your financial ledger regarding "${userMsg}". Your current total balance is **$${kpi.totalBalance.toLocaleString()}**, with a healthy monthly savings rate of **58.7%**. Would you like me to generate a full breakdown or forecast next month's cash flow?`;
+        replyText = `I've analyzed your financial ledger regarding "${userMsg}". Your current total balance is **${formatCurrency(kpi.totalBalance)}**, with a healthy monthly savings rate of **58.7%**. Would you like me to generate a full breakdown or forecast next month's cash flow?`;
       }
 
       setMessages((prev) => [

@@ -17,7 +17,7 @@ import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 
 export const Admin = () => {
-  const { adminMetrics, addToast } = useFinancial();
+  const { adminMetrics, addToast, formatCurrency } = useFinancial();
   const [activeTab, setActiveTab] = useState('flagged');
 
   const handleRetrainModel = () => {
@@ -65,7 +65,7 @@ export const Admin = () => {
             <Activity className="w-5 h-5 text-emerald-400" />
           </div>
           <h3 className="text-2xl font-extrabold text-slate-100 light:text-slate-900 mt-3">
-            ${(adminMetrics.totalVolume / 1000000).toFixed(1)}M
+            {formatCurrency(adminMetrics.totalVolume)}
           </h3>
           <span className="text-[11px] text-slate-400 mt-1 block">Total throughput</span>
         </div>

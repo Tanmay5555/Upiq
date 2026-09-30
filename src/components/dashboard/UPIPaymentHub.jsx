@@ -30,7 +30,7 @@ const QRPattern = () => {
 };
 
 export const UPIPaymentHub = () => {
-  const { profile, transactions, addTransaction, addToast, formatCurrency, kpi } = useFinancial();
+  const { profile, transactions, addTransaction, addToast, formatCurrency, currentCurrency, kpi } = useFinancial();
   const [contacts, setContacts] = useState(contactsSeed);
   const [selectedContact, setSelectedContact] = useState(contactsSeed[0]);
   const [amount, setAmount] = useState(500);
@@ -65,9 +65,9 @@ export const UPIPaymentHub = () => {
 
   const submitTransfer = (event) => {
     event.preventDefault();
-    if (amount < 1) { addToast('Enter an amount', 'Choose an amount greater than ₹0 to continue', 'warning'); return; }
+    if (amount < 1) { addToast('Enter an amount', 'Choose an amount greater than 0 to continue', 'warning'); return; }
     if (transferMode === 'request') {
-      addToast('Request sent', `${selectedContact.name} received your ${formatRupees(amount)} request`, 'success');
+      addToast('Request sent', `${selectedContact.name} received your ${currentCurrency?.symbol || '₹'}${amount} request`, 'success');
       setTransferMode('send');
       return;
     }
@@ -80,7 +80,7 @@ export const UPIPaymentHub = () => {
     const receipt = { id: `UPI${Date.now().toString().slice(-10)}`, amount: Number(amount), date: new Date(), recipient: selectedContact, note, mode: transferMode };
     setIsPinModalOpen(false);
     setPaymentSuccess(receipt);
-    addTransaction({ title: `${transferMode === 'self' ? 'Self transfer' : 'UPI payment'} · ${selectedContact.name}`, merchant: selectedContact.vpa, amount: receipt.amount / 83.5, upiAmount: receipt.amount, type: 'expense', category: 'Transfers', mode: 'UPI', date: receipt.date.toISOString(), location: 'UPIQ secure transfer' });
+    addTransaction({ title: `${transferMode === 'self' ? 'Self transfer' : 'UPI payment'} · ${selectedContact.name}`, merchant: selectedContact.vpa, amount: receipt.amount, type: 'expense', category: 'Transfers', mode: 'UPI', date: receipt.date.toISOString(), location: 'UPIQ secure transfer' });
   };
 
   const addBeneficiary = (event) => {
@@ -124,9 +124,9 @@ export const UPIPaymentHub = () => {
           <div className="contact-carousel">{contacts.map((contact) => <button type="button" key={contact.vpa} onClick={() => setSelectedContact(contact)} className={`contact-chip ${selectedContact.vpa === contact.vpa ? 'contact-chip--selected' : ''}`} aria-pressed={selectedContact.vpa === contact.vpa}><span className={`contact-avatar bg-gradient-to-br ${contact.color}`}>{contact.initials}</span><span>{contact.name}</span></button>)}</div>
 
           <form onSubmit={submitTransfer}>
-            <div className="amount-entry"><span>₹</span><input aria-label="Transfer amount in rupees" type="number" min="1" max="1000000" value={amount} onChange={(event) => setAmount(Math.max(0, Number(event.target.value)))} /><span className="amount-label">INR</span></div>
+            <div className="amount-entry"><span>{currentCurrency?.symbol || '₹'}</span><input aria-label="Transfer amount" type="number" min="1" max="1000000" value={amount} onChange={(event) => setAmount(Math.max(0, Number(event.target.value)))} /><span className="amount-label">{currentCurrency?.code || 'INR'}</span></div>
             <input className="amount-slider" aria-label="Adjust transfer amount" type="range" min="0" max="10000" step="100" value={Math.min(amount, 10000)} onChange={(event) => setAmount(Number(event.target.value))} style={{ '--slider-progress': `${Math.min(amount / 10000 * 100, 100)}%` }} />
-            <div className="amount-chips">{quickAmounts.map((quickAmount) => <button key={quickAmount} type="button" onClick={() => setAmount(quickAmount)} className={amount === quickAmount ? 'amount-chip amount-chip--active' : 'amount-chip'}>{formatRupees(quickAmount)}</button>)}</div>
+            <div className="amount-chips">{quickAmounts.map((quickAmount) => <button key={quickAmount} type="button" onClick={() => setAmount(quickAmount)} className={amount === quickAmount ? 'amount-chip amount-chip--active' : 'amount-chip'}>{currentCurrency?.symbol || '₹'}{quickAmount}</button>)}</div>
             <label className="sr-only" htmlFor="upi-note">Add a note</label><input id="upi-note" className="note-input" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Add a note (optional)" maxLength={60} />
             <div className="transfer-summary"><span>{transferMode === 'request' ? 'Requesting from' : transferMode === 'self' ? 'Transferring to' : 'Paying'} <b>{selectedContact.name}</b></span><span><LockKeyhole size={12} /> UPI secure</span></div>
             <button type="submit" className="transfer-submit">{transferMode === 'request' ? 'Request money' : 'Pay securely with UPI PIN'}<ArrowRight size={16} /></button>
@@ -146,8 +146,7 @@ export const UPIPaymentHub = () => {
           <div className="upi-transactions">{transactionsForFeed.length ? transactionsForFeed.map((transaction) => {
             const isCredit = transaction.type === 'income';
             const avatarText = (transaction.title || 'UPI').split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase();
-            const rupeeAmount = transaction.upiAmount ?? transaction.amount * (profile.currency === 'INR' ? 83.5 : 1);
-            return <div className="upi-transaction" key={transaction.id}><span className={`merchant-avatar ${isCredit ? 'merchant-avatar--credit' : ''}`}>{avatarText}</span><span className="merchant-copy"><b>{transaction.title}</b><small><Clock3 size={11} />{new Date(transaction.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} · {transaction.category}</small></span><span className={`merchant-amount ${isCredit ? 'merchant-amount--credit' : ''}`}>{isCredit ? '+' : '−'}{formatRupees(rupeeAmount)}</span></div>;
+            return <div className="upi-transaction" key={transaction.id}><span className={`merchant-avatar ${isCredit ? 'merchant-avatar--credit' : ''}`}>{avatarText}</span><span className="merchant-copy"><b>{transaction.title}</b><small><Clock3 size={11} />{new Date(transaction.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} · {transaction.category}</small></span><span className={`merchant-amount ${isCredit ? 'merchant-amount--credit' : ''}`}>{isCredit ? '+' : '−'}{formatCurrency(transaction.amount)}</span></div>;
           }) : <div className="empty-activity"><History size={17} />Your recent UPI payments will appear here.</div>}</div>
         </section>
       </div>

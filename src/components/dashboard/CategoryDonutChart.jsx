@@ -4,7 +4,7 @@ import { Card } from '../common/Card';
 import { useFinancial } from '../../context/FinancialContext';
 
 export const CategoryDonutChart = () => {
-  const { categories } = useFinancial();
+  const { categories, formatCurrency } = useFinancial();
 
   const CustomPieTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -13,7 +13,7 @@ export const CategoryDonutChart = () => {
         <div className="bg-slate-900/95 border border-slate-700/80 p-3 rounded-xl shadow-2xl backdrop-blur-md text-xs space-y-1 light:bg-white light:border-slate-300">
           <p className="font-bold text-slate-100 light:text-slate-900">{data.name}</p>
           <p className="text-indigo-400 font-semibold">
-            ${data.value.toLocaleString()} ({data.percentage}%)
+            {formatCurrency(data.value)} ({data.percentage}%)
           </p>
         </div>
       );
@@ -52,7 +52,9 @@ export const CategoryDonutChart = () => {
         {/* Center Summary text */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
           <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-400">Total Spent</span>
-          <span className="text-base font-extrabold text-slate-100 light:text-slate-900">$5,140</span>
+          <span className="text-base font-extrabold text-slate-100 light:text-slate-900">
+            {formatCurrency(categories.reduce((acc, c) => acc + c.value, 0))}
+          </span>
         </div>
       </div>
 

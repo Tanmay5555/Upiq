@@ -7,7 +7,7 @@ import { InvestmentSuggestions } from '../components/insights/InvestmentSuggesti
 import { Button } from '../components/common/Button';
 
 export const Insights = () => {
-  const { budgets, fraudAlerts, setIsFraudDrawerOpen } = useFinancial();
+  const { budgets, fraudAlerts, setIsFraudDrawerOpen, formatCurrency } = useFinancial();
   const { totalBudgeted, totalSpent, totalPredicted, idleCash, warningCount } = useAIBudget();
 
   return (
@@ -37,7 +37,7 @@ export const Insights = () => {
         <div className="rounded-2xl glass-panel p-5 border border-indigo-500/20">
           <span className="text-xs text-slate-400 uppercase font-semibold">Total Monthly Budget</span>
           <h3 className="text-2xl font-extrabold text-slate-100 light:text-slate-900 mt-2">
-            ${totalBudgeted.toLocaleString()}
+            {formatCurrency(totalBudgeted)}
           </h3>
           <p className="text-[11px] text-slate-400 mt-1">Cap set across 5 primary categories</p>
         </div>
@@ -45,7 +45,7 @@ export const Insights = () => {
         <div className="rounded-2xl glass-panel p-5 border border-indigo-500/20">
           <span className="text-xs text-slate-400 uppercase font-semibold">Current Month Spend</span>
           <h3 className="text-2xl font-extrabold text-emerald-400 mt-2">
-            ${totalSpent.toLocaleString()}
+            {formatCurrency(totalSpent)}
           </h3>
           <p className="text-[11px] text-emerald-400/80 mt-1">{(totalSpent / totalBudgeted * 100).toFixed(1)}% of total cap</p>
         </div>
@@ -53,7 +53,7 @@ export const Insights = () => {
         <div className="rounded-2xl glass-panel p-5 border border-indigo-500/20">
           <span className="text-xs text-slate-400 uppercase font-semibold">AI Predicted Month-End</span>
           <h3 className={`text-2xl font-extrabold mt-2 ${totalPredicted > totalBudgeted ? 'text-rose-400' : 'text-indigo-400'}`}>
-            ${totalPredicted.toLocaleString()}
+            {formatCurrency(totalPredicted)}
           </h3>
           <p className="text-[11px] text-slate-400 mt-1">Based on spending velocity</p>
         </div>
@@ -61,7 +61,7 @@ export const Insights = () => {
         <div className="rounded-2xl glass-panel p-5 border border-purple-500/30 bg-purple-950/20">
           <span className="text-xs text-purple-300 uppercase font-semibold">Idle Cash Capacity</span>
           <h3 className="text-2xl font-extrabold text-purple-300 mt-2">
-            ${idleCash.toLocaleString()}
+            {formatCurrency(idleCash)}
           </h3>
           <p className="text-[11px] text-purple-400 mt-1">Ready for high-yield deployment</p>
         </div>

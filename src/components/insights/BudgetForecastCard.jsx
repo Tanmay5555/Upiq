@@ -2,8 +2,10 @@ import React from 'react';
 import { AlertTriangle, CheckCircle, TrendingUp } from 'lucide-react';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
+import { useFinancial } from '../../context/FinancialContext';
 
 export const BudgetForecastCard = ({ forecast }) => {
+  const { formatCurrency } = useFinancial();
   const percentSpent = Math.min(100, Math.round((forecast.spent / forecast.budget) * 100));
   const percentPredicted = Math.min(100, Math.round((forecast.predicted / forecast.budget) * 100));
 
@@ -24,7 +26,7 @@ export const BudgetForecastCard = ({ forecast }) => {
             <h4 className="text-base font-bold text-slate-100 light:text-slate-900">
               {forecast.category}
             </h4>
-            <span className="text-xs text-slate-400">Budget Limit: ${forecast.budget.toLocaleString()}</span>
+            <span className="text-xs text-slate-400">Budget Limit: {formatCurrency(forecast.budget)}</span>
           </div>
         </div>
 
@@ -48,13 +50,13 @@ export const BudgetForecastCard = ({ forecast }) => {
         <div>
           <span className="text-slate-400 block">Spent so far:</span>
           <span className="font-extrabold text-sm text-slate-100 light:text-slate-900">
-            ${forecast.spent.toLocaleString()}
+            {formatCurrency(forecast.spent)}
           </span>
         </div>
         <div>
           <span className="text-slate-400 block">AI Month-End Forecast:</span>
           <span className={`font-extrabold text-sm ${forecast.predicted > forecast.budget ? 'text-rose-400' : 'text-indigo-400'}`}>
-            ${forecast.predicted.toLocaleString()}
+            {formatCurrency(forecast.predicted)}
           </span>
         </div>
       </div>

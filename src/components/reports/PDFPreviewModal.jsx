@@ -2,8 +2,10 @@ import React from 'react';
 import { FileDown, Printer, CheckCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
+import { useFinancial } from '../../context/FinancialContext';
 
 export const PDFPreviewModal = ({ isOpen, onClose, reportData }) => {
+  const { formatCurrency } = useFinancial();
   if (!reportData) return null;
 
   const handlePrint = () => {
@@ -41,19 +43,19 @@ export const PDFPreviewModal = ({ isOpen, onClose, reportData }) => {
             <div className="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 light:bg-slate-100 light:border-slate-200">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">Total Revenue</span>
               <span className="text-sm font-extrabold text-emerald-400">
-                ${reportData.totalIncome?.toLocaleString()}
+                {formatCurrency(reportData.totalIncome)}
               </span>
             </div>
             <div className="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 light:bg-slate-100 light:border-slate-200">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">Total Expenses</span>
               <span className="text-sm font-extrabold text-rose-400">
-                ${reportData.totalExpense?.toLocaleString()}
+                {formatCurrency(reportData.totalExpense)}
               </span>
             </div>
             <div className="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 light:bg-slate-100 light:border-slate-200">
               <span className="text-slate-400 block text-[10px] uppercase font-bold">Net Savings</span>
               <span className="text-sm font-extrabold text-indigo-400">
-                ${reportData.netSavings?.toLocaleString()}
+                {formatCurrency(reportData.netSavings)}
               </span>
             </div>
             <div className="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 light:bg-slate-100 light:border-slate-200">
@@ -70,7 +72,7 @@ export const PDFPreviewModal = ({ isOpen, onClose, reportData }) => {
               <Sparkles className="w-4 h-4 text-purple-400" /> Executive AI Commentary
             </h4>
             <p className="text-slate-300 leading-relaxed">
-              During {reportData.month}, net savings reached **${reportData.netSavings?.toLocaleString()}**, representing a savings rate of **{reportData.savingsRate}**. Major expenditure went towards **{reportData.topCategory}**. {reportData.fraudPrevented} fraudulent attempt was auto-intercepted by UPIQ Risk Engine with 0% data leakage.
+              During {reportData.month}, net savings reached **{formatCurrency(reportData.netSavings)}**, representing a savings rate of **{reportData.savingsRate}**. Major expenditure went towards **{reportData.topCategory}**. {reportData.fraudPrevented} fraudulent attempt was auto-intercepted by UPIQ Risk Engine with 0% data leakage.
             </p>
           </div>
 
