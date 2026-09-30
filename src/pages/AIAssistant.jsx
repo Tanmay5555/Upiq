@@ -5,9 +5,10 @@ import { useVoiceInput } from '../hooks/useVoiceInput';
 import { VoiceRipple } from '../components/ai/VoiceRipple';
 import { QuickPromptPills } from '../components/ai/QuickPromptPills';
 import { Button } from '../components/common/Button';
+import { FinancialChatService } from '../services/financial-chat.service';
 
 export const AIAssistant = () => {
-  const { aiPromptQuery, setAiPromptQuery, transactions, kpi, budgets } = useFinancial();
+  const { aiPromptQuery, setAiPromptQuery, transactions, kpi, budgets, formatCurrency } = useFinancial();
   const [messages, setMessages] = useState([
     {
       id: 'm1',
@@ -40,9 +41,29 @@ export const AIAssistant = () => {
     }
   }, [aiPromptQuery]);
 
-  const generateAiResponse = (userMsg) => {
+  const generateAiResponse = async (userMsg) => {
     const lower = userMsg.toLowerCase();
     setIsTyping(true);
+
+    try {
+      const res = await FinancialChatService.ask(userMsg);
+      if (res?.data?.response || res?.data?.message || res?.data?.answer) {
+        const reply = res.data.response || res.data.message || res.data.answer;
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `ai-${Date.now()}`,
+            sender: 'ai',
+            text: reply,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+    } catch {
+      // Backend unavailable; use client-side heuristic response engine
+    }
 
     setTimeout(() => {
       let replyText = "";
@@ -74,7 +95,7 @@ export const AIAssistant = () => {
         },
       ]);
       setIsTyping(false);
-    }, 1000);
+    }, 600);
   };
 
   const handleSend = (textToSend = inputText) => {

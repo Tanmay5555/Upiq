@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import { AuthService } from '../services/auth.service';
+import { TransactionService } from '../services/transaction.service';
 import {
   userProfile as initialProfile,
   testStandardUser,
@@ -98,12 +100,32 @@ export const FinancialProvider = ({ children }) => {
   };
 
   // Auth operations
-  const login = (email, password, currencyCode, userName, role) => {
+  const login = async (email, password, currencyCode, userName, role) => {
     const isAdmin = (email && email.toLowerCase().includes('admin')) || role === 'admin';
     const basePreset = isAdmin ? testAdminUser : testStandardUser;
 
     const targetCurrency = currencyCode || selectedCurrencyCode || basePreset.currency || 'INR';
     setSelectedCurrencyCode(targetCurrency);
+
+    let token = null;
+    try {
+      // Attempt Spring Boot backend auth
+      const res = await AuthService.login(email, password || 'password123');
+      if (res?.data?.token) {
+        token = res.data.token;
+        localStorage.setItem('upiq_token', token);
+      }
+    } catch {
+      try {
+        // Auto-register on backend if user does not exist yet
+        await AuthService.register(email, password || 'password123', userName || 'User', isAdmin ? 'ADMIN' : 'USER');
+        const loginRes = await AuthService.login(email, password || 'password123');
+        if (loginRes?.data?.token) {
+          token = loginRes.data.token;
+          localStorage.setItem('upiq_token', token);
+        }
+      } catch {}
+    }
 
     const updatedProfile = {
       ...basePreset,
@@ -129,6 +151,16 @@ export const FinancialProvider = ({ children }) => {
       localStorage.setItem('upiq_currency', JSON.stringify(targetCurrency));
     } catch {}
 
+    // Fetch transactions from Spring Boot backend if token is available
+    if (token) {
+      try {
+        const txRes = await TransactionService.getAll();
+        if (txRes?.data && Array.isArray(txRes.data) && txRes.data.length > 0) {
+          setTransactions(txRes.data);
+        }
+      } catch {}
+    }
+
     addToast(
       'Welcome to UPIQ AI',
       `Logged in as ${updatedProfile.name} (${isAdmin ? 'Admin View' : 'Standard User'})`,
@@ -141,6 +173,7 @@ export const FinancialProvider = ({ children }) => {
     setActiveTab('dashboard');
     try {
       localStorage.removeItem('upiq_auth');
+      localStorage.removeItem('upiq_token');
     } catch {}
     addToast('Logged Out', 'You have been signed out of UPIQ AI session', 'info');
   };
@@ -232,23 +265,36 @@ export const FinancialProvider = ({ children }) => {
   };
 
   // Transaction Operations
-  const addTransaction = (newTx) => {
+  const addTransaction = async (newTx) => {
     const category = newTx.category || predictCategory(newTx.title);
+    const amt = parseFloat(newTx.amount);
     const created = {
       id: `tx-${Date.now()}`,
       title: newTx.title,
-      amount: parseFloat(newTx.amount),
+      amount: amt,
       type: newTx.type || 'expense',
       category: category,
       mode: newTx.mode || 'UPI',
       date: newTx.date || new Date().toISOString(),
       status: 'Completed',
-      isAnomaly: parseFloat(newTx.amount) > 1000,
-      anomalyReason: parseFloat(newTx.amount) > 1000 ? 'High amount transaction requiring AI verification' : undefined,
+      isAnomaly: amt > 1000,
+      anomalyReason: amt > 1000 ? 'High amount transaction requiring AI verification' : undefined,
       merchant: newTx.merchant || newTx.title,
       location: newTx.location || 'Local',
       upiAmount: newTx.upiAmount,
     };
+
+    // Attempt backend persistence if authenticated token is active
+    try {
+      await TransactionService.create({
+        amount: amt,
+        type: created.type,
+        category: created.category,
+        description: created.title,
+        paymentMethod: created.mode,
+        date: created.date,
+      });
+    } catch {}
 
     setTransactions((prev) => [created, ...prev]);
 

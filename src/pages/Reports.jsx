@@ -5,6 +5,7 @@ import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 import { PDFPreviewModal } from '../components/reports/PDFPreviewModal';
+import { FinancialDashboardService } from '../services/financial-dashboard.service';
 
 export const Reports = () => {
   const { reports, addToast, formatCurrency } = useFinancial();
@@ -14,8 +15,13 @@ export const Reports = () => {
 
   const currentReport = reports.find((r) => r.month === selectedMonth) || reports[0];
 
-  const handleDownloadPdf = (rep) => {
+  const handleDownloadPdf = async (rep) => {
     setActiveReportForPdf(rep);
+    try {
+      await FinancialDashboardService.downloadPdfReport(rep.month);
+    } catch {
+      // Backend unavailable; modal fallback is displayed
+    }
     addToast('Report Ready', `Generated executive report PDF for ${rep.month}`, 'success');
   };
 
