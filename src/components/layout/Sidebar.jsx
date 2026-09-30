@@ -27,7 +27,7 @@ export const Sidebar = () => {
     { id: 'security', label: 'Security & Fraud', icon: ShieldAlert, badge: fraudAlerts.length },
     { id: 'reports', label: 'Monthly Reports', icon: FileText },
     { id: 'profile', label: 'User Profile', icon: User },
-    { id: 'admin', label: 'Admin View', icon: ShieldCheck },
+    ...(profile?.role === 'admin' ? [{ id: 'admin', label: 'Admin View', icon: ShieldCheck }] : []),
   ];
 
   return (
@@ -39,15 +39,17 @@ export const Sidebar = () => {
       {/* Brand Header */}
       <div className="flex items-center justify-between h-[84px] px-5 border-b border-white/[0.06] light:border-slate-200">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-emerald-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
+          <img
+            src="/upiq-logo.jpg"
+            alt="UPIQ AI Logo"
+            className="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/40 flex-shrink-0 shadow-lg shadow-indigo-500/30 hover:scale-105 transition-transform"
+          />
           {!collapsed && (
             <div className="flex flex-col">
               <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 light:from-slate-900 light:to-indigo-700 bg-clip-text text-transparent">
                 UPIQ AI
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-400">
+              <span className="text-[10px] uppercase font-bold tracking-widest bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
                 Fintech Operating System
               </span>
             </div>
@@ -76,8 +78,8 @@ export const Sidebar = () => {
               className={`w-full flex items-center gap-3.5 px-3.5 py-3 rounded-xl font-medium text-sm transition-all duration-200 group relative ${
                 isActive
                   ? item.isAi
-                    ? 'bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-pink-600/90 text-white shadow-lg shadow-purple-600/25'
-                    : 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 light:bg-indigo-50 light:text-indigo-600'
+                    ? 'bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-pink-600/90 text-white shadow-lg shadow-purple-600/25 border border-purple-400/30'
+                    : 'bg-gradient-to-r from-indigo-600/25 via-purple-600/20 to-indigo-600/10 text-indigo-300 border border-indigo-500/35 shadow-md shadow-indigo-500/10 light:bg-indigo-50 light:text-indigo-600'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 light:hover:bg-slate-100 light:text-slate-600'
               }`}
               title={collapsed ? item.label : undefined}

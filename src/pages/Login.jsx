@@ -143,9 +143,11 @@ export const Login = () => {
         className="w-full max-w-7xl mx-auto flex items-center justify-between py-4 px-6 rounded-2xl glass-panel border border-slate-800/80 mb-8 z-20 backdrop-blur-xl"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-indigo-600/30">
-            <WalletCards className="w-5 h-5 text-white" />
-          </div>
+          <img
+            src="/upiq-logo.jpg"
+            alt="UPIQ AI Logo"
+            className="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/40 shadow-lg shadow-indigo-600/30 hover:scale-105 transition-transform"
+          />
           <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
             UPIQ AI<span className="text-indigo-400">.</span>
           </span>
@@ -286,9 +288,11 @@ export const Login = () => {
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
                   <div className="text-center space-y-2">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-emerald-500 flex items-center justify-center mx-auto shadow-lg shadow-indigo-600/30">
-                      <WalletCards className="w-6 h-6 text-white" />
-                    </div>
+                    <img
+                      src="/upiq-logo.jpg"
+                      alt="UPIQ AI Logo"
+                      className="w-14 h-14 rounded-2xl object-cover ring-2 ring-indigo-500/40 mx-auto shadow-xl shadow-indigo-600/40 hover:scale-105 transition-transform"
+                    />
                     <h2 className="text-xl font-bold text-slate-100">Sign In to UPIQ AI</h2>
                     <p className="text-xs text-slate-400">Select your country & currency preference</p>
                   </div>

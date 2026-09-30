@@ -51,6 +51,22 @@ export const FinancialProvider = ({ children }) => {
   const [aiPromptQuery, setAiPromptQuery] = useState('');
   const [toasts, setToasts] = useState([]);
 
+  // Ensure non-admin users cannot remain on admin tab
+  React.useEffect(() => {
+    if (activeTab === 'admin' && profile?.role !== 'admin') {
+      setActiveTab('dashboard');
+    }
+  }, [profile, activeTab]);
+
+  const changeActiveTab = (tab) => {
+    if (tab === 'admin' && profile?.role !== 'admin') {
+      addToast('Access Restricted', 'Admin View is restricted to Administrator accounts', 'warning');
+      setActiveTab('dashboard');
+      return;
+    }
+    setActiveTab(tab);
+  };
+
   // Sync state to localStorage whenever changed
   const updateCurrency = (code) => {
     setSelectedCurrencyCode(code);
@@ -122,6 +138,7 @@ export const FinancialProvider = ({ children }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
+    setActiveTab('dashboard');
     try {
       localStorage.removeItem('upiq_auth');
     } catch {}
@@ -298,7 +315,7 @@ export const FinancialProvider = ({ children }) => {
         reports,
         adminMetrics,
         activeTab,
-        setActiveTab,
+        setActiveTab: changeActiveTab,
         isFraudDrawerOpen,
         setIsFraudDrawerOpen,
         aiPromptQuery,

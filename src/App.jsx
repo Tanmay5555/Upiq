@@ -13,7 +13,7 @@ import { Admin } from './pages/Admin';
 import { Profile } from './pages/Profile';
 
 const AppContent = () => {
-  const { isAuthenticated, activeTab } = useFinancial();
+  const { isAuthenticated, activeTab, profile } = useFinancial();
 
   const renderPage = () => {
     switch (activeTab) {
@@ -30,7 +30,7 @@ const AppContent = () => {
       case 'reports':
         return <Reports />;
       case 'admin':
-        return <Admin />;
+        return profile?.role === 'admin' ? <Admin /> : <Dashboard />;
       case 'profile':
         return <Profile />;
       default:

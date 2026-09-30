@@ -8,7 +8,7 @@ import { AddEditTransactionModal } from '../transactions/AddEditTransactionModal
 import { ToastContainer } from '../common/Toast';
 import { useFinancial } from '../../context/FinancialContext';
 
-import { PixelTransition } from '../common/PixelTransition';
+import { GradientTransition } from '../common/GradientTransition';
 
 const TAB_INDEX_MAP = {
   dashboard: 0,
@@ -72,8 +72,15 @@ export const MainLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen flex bg-transparent text-slate-100 light:text-slate-900 selection:bg-indigo-500 selection:text-white transition-colors overflow-hidden relative">
-      {/* Webflow Style Pixel Transition overlay on tab switch */}
-      <PixelTransition activeKey={activeTab} />
+      {/* Background ambient glowing gradient mesh orbs */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute top-[-10%] right-[-5%] w-[550px] h-[550px] rounded-full bg-gradient-to-br from-indigo-600/15 via-purple-600/12 to-transparent blur-[130px] light:from-indigo-400/25 light:via-purple-400/20" />
+        <div className="absolute bottom-[-10%] left-[10%] w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-pink-600/12 via-rose-500/10 to-transparent blur-[140px] light:from-pink-400/20 light:via-rose-400/15" />
+        <div className="absolute top-[40%] right-[25%] w-[450px] h-[450px] rounded-full bg-gradient-to-r from-cyan-500/10 via-emerald-500/10 to-transparent blur-[130px] light:from-cyan-400/20 light:via-emerald-400/15" />
+      </div>
+
+      {/* Modern Gradient Aura Overlay on tab switch */}
+      <GradientTransition activeKey={activeTab} />
 
       {/* FIXED LEFT SIDEBAR: Never moves during tab transitions */}
       <Sidebar />

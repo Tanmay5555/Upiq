@@ -19,17 +19,17 @@ export const Button = ({
 
   const variantClasses = {
     primary:
-      'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/25 active:scale-95',
+      'bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-600/30 active:scale-95 border border-indigo-400/20',
     secondary:
-      'bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 light:bg-slate-200 light:text-slate-800 light:hover:bg-slate-300 active:scale-95',
+      'bg-gradient-to-r from-slate-900/90 via-slate-800/90 to-slate-900/90 hover:from-slate-800 hover:to-slate-700 text-slate-200 border border-white/10 light:from-slate-100 light:to-slate-200 light:text-slate-800 light:hover:from-slate-200 light:hover:to-slate-300 active:scale-95',
     emerald:
-      'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 active:scale-95',
+      'bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white shadow-lg shadow-emerald-600/30 active:scale-95 border border-emerald-400/20',
     rose:
-      'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/25 active:scale-95',
+      'bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 hover:from-rose-500 hover:to-purple-500 text-white shadow-lg shadow-rose-600/30 active:scale-95 border border-rose-400/20',
     ghost:
       'bg-transparent hover:bg-slate-800/50 text-slate-400 hover:text-slate-200 light:hover:bg-slate-200 light:hover:text-slate-800',
     ai:
-      'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white shadow-lg shadow-purple-500/25 active:scale-95 border border-white/10',
+      'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white shadow-lg shadow-purple-500/35 active:scale-95 border border-white/20',
   };
 
   return (
