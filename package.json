@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "oxlint",
     "test": "node scripts/verify-project.js",
+    "llama:verify": "node scripts/setup-llama.js",
     "preview": "vite preview"
   },
   "dependencies": {

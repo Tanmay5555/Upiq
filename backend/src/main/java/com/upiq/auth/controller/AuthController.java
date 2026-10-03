@@ -68,4 +68,20 @@ public class AuthController {
                 .build();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
+    // 🌐 Google OAuth Login / Registration
+    @PostMapping("/google")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> googleLogin(
+            @RequestBody com.upiq.auth.dto.GoogleOAuthRequest request) {
+        String token = authService.loginWithGoogle(request);
+        Map<String, Object> data = new HashMap<>();
+        data.put("token", token);
+        data.put("authType", "GOOGLE_OAUTH");
+        ApiResponse<Map<String, Object>> response = ApiResponse.<Map<String, Object>>builder()
+                .success(true)
+                .data(data)
+                .message("Google OAuth sign-in successful")
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

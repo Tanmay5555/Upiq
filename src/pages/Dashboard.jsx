@@ -8,6 +8,7 @@ import { CategoryDonutChart } from '../components/dashboard/CategoryDonutChart';
 import { RecentTransactionsWidget } from '../components/dashboard/RecentTransactionsWidget';
 import { QuickAskBar } from '../components/dashboard/QuickAskBar';
 import { UPIPaymentHub } from '../components/dashboard/UPIPaymentHub';
+import { UpcomingFeaturesSection } from '../components/dashboard/UpcomingFeaturesSection';
 
 export const Dashboard = () => {
   const { kpi, profile } = useFinancial();
@@ -157,6 +158,11 @@ export const Dashboard = () => {
       {/* Recent Ledger Stream Widget */}
       <motion.div variants={itemVariants}>
         <RecentTransactionsWidget />
+      </motion.div>
+
+      {/* Backend Capabilities & System Roadmap */}
+      <motion.div variants={itemVariants}>
+        <UpcomingFeaturesSection />
       </motion.div>
     </motion.div>
   );

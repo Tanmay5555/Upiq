@@ -13,7 +13,7 @@ export const AIAssistant = () => {
     {
       id: 'm1',
       sender: 'ai',
-      text: "Hello Varsha! I am your UPIQ AI Finance Assistant. Ask me anything about your cash flow, recurring bills, budget limits, or suspicious charges.",
+      text: "Hello ! I am your UPIQ AI Finance Assistant. Ask me anything about your cash flow, recurring bills, budget limits, or suspicious charges.",
       timestamp: 'Just now',
     },
   ]);
@@ -47,14 +47,14 @@ export const AIAssistant = () => {
 
     try {
       const res = await FinancialChatService.ask(userMsg);
-      if (res?.data?.response || res?.data?.message || res?.data?.answer) {
-        const reply = res.data.response || res.data.message || res.data.answer;
+      const answerText = res?.data?.answer || res?.data?.data?.answer || res?.data?.response || res?.data?.message;
+      if (answerText) {
         setMessages((prev) => [
           ...prev,
           {
             id: `ai-${Date.now()}`,
             sender: 'ai',
-            text: reply,
+            text: answerText,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           },
         ]);

@@ -15,8 +15,11 @@ import { useFinancial } from '../../context/FinancialContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useVoiceInput } from '../../hooks/useVoiceInput';
 import { Button } from '../common/Button';
+import { BackendFeatureRoadmapModal } from '../common/BackendFeatureRoadmapModal';
+import { Server, Sparkles } from 'lucide-react';
 
 export const Header = ({ onOpenAddTxModal }) => {
+  const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
   const {
     profile,
     fraudAlerts,
@@ -94,6 +97,16 @@ export const Header = ({ onOpenAddTxModal }) => {
 
       {/* Header Actions */}
       <div className="flex items-center gap-1.5 sm:gap-2 ml-auto shrink-0">
+        {/* Backend Status & Roadmap Trigger */}
+        <button
+          onClick={() => setIsRoadmapOpen(true)}
+          className="hidden lg:flex items-center gap-1.5 px-3 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-xs font-semibold text-indigo-300 hover:text-white hover:bg-indigo-500/20 transition-all duration-200"
+          title="Backend Capabilities & Roadmap"
+        >
+          <Server className="w-3.5 h-3.5 text-indigo-400 animate-pulse" />
+          <span>System Matrix</span>
+        </button>
+
         {/* Global Currency Switcher */}
         <div className="relative flex items-center gap-1.5 px-2 py-2 sm:px-2.5 bg-white/[0.035] border border-white/[0.07] rounded-xl light:bg-slate-100 light:border-slate-300">
           <Globe className="w-3.5 h-3.5 text-emerald-400" />
@@ -180,6 +193,8 @@ export const Header = ({ onOpenAddTxModal }) => {
           />
         </button>
       </div>
+
+      <BackendFeatureRoadmapModal isOpen={isRoadmapOpen} onClose={() => setIsRoadmapOpen(false)} />
     </header>
   );
 };

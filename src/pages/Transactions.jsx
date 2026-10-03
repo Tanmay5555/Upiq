@@ -3,6 +3,8 @@ import {
   Search,
   Plus,
   UploadCloud,
+  FileText,
+  Receipt,
   Filter,
   Trash2,
   Edit2,
@@ -23,6 +25,7 @@ import { useFinancial } from '../context/FinancialContext';
 import { CategoryChip } from '../components/transactions/CategoryChip';
 import { AddEditTransactionModal } from '../components/transactions/AddEditTransactionModal';
 import { ReceiptScannerModal } from '../components/transactions/ReceiptScannerModal';
+import { StatementUploadModal } from '../components/transactions/StatementUploadModal';
 import { Button } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
 
@@ -45,6 +48,7 @@ export const Transactions = () => {
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
+  const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
   const [txToEdit, setTxToEdit] = useState(null);
 
   // Category Configuration with icons & colors
@@ -108,13 +112,20 @@ export const Transactions = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Button
+            onClick={() => setIsStatementModalOpen(true)}
+            variant="ai"
+            icon={FileText}
+          >
+            Upload Bank Statement
+          </Button>
           <Button
             onClick={() => setIsReceiptModalOpen(true)}
             variant="secondary"
-            icon={UploadCloud}
+            icon={Receipt}
           >
-            Scan Receipt OCR
+            Scan Bill / Receipt
           </Button>
           <Button
             onClick={() => {
@@ -366,6 +377,10 @@ export const Transactions = () => {
       <ReceiptScannerModal
         isOpen={isReceiptModalOpen}
         onClose={() => setIsReceiptModalOpen(false)}
+      />
+      <StatementUploadModal
+        isOpen={isStatementModalOpen}
+        onClose={() => setIsStatementModalOpen(false)}
       />
     </div>
   );

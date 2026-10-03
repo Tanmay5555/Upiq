@@ -1,4 +1,4 @@
-import { supportedCurrencies } from '../src/data/mockData.js';
+import { supportedCurrencies } from '../src/data/currencies.js';
 
 console.log('====================================================');
 console.log('🧪 RUNNING FULL PROJECT INTEGRATION TEST SUITE');

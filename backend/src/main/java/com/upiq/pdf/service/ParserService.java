@@ -19,10 +19,23 @@ public class ParserService {
     private final FileValidationService validationService;
     private final AIPDFParserService pdfParserService;
     private final CSVParserService csvParserService;
+    private final LlamaStatementExtractor llamaExtractor;
 
     public ParsingResponse parseFile(MultipartFile file) {
         // Validate file first
         validationService.validateFile(file);
+
+        // Attempt Llama 3 AI whole detail extraction first
+        try {
+            String contentText = new String(file.getBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            ParsingResponse llamaResponse = llamaExtractor.extractWithLlama(contentText, file.getOriginalFilename());
+            if (llamaResponse != null && llamaResponse.getTransactions() != null && !llamaResponse.getTransactions().isEmpty()) {
+                log.info("Llama 3 statement extraction returned {} transactions", llamaResponse.getTransactions().size());
+                return llamaResponse;
+            }
+        } catch (Exception e) {
+            log.debug("Llama 3 extraction fallback to rule-based parser: {}", e.getMessage());
+        }
 
         List<TransactionRequest> transactions;
         List<String> errors = new ArrayList<>();

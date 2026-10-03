@@ -15,7 +15,7 @@ import {
   monthlyReports as initialReports,
   adminMetrics as initialAdminMetrics,
   supportedCurrencies,
-} from '../data/mockData';
+} from '../data/initialState';
 
 const FinancialContext = createContext();
 
@@ -200,6 +200,60 @@ export const FinancialProvider = ({ children }) => {
     );
   };
 
+  const loginWithGoogle = async (googleData = {}) => {
+    const email = googleData.email || 'google.user@gmail.com';
+    const name = googleData.name || 'Google User (Gmail)';
+    const targetCurrency = googleData.currencyCode || selectedCurrencyCode || 'INR';
+    setSelectedCurrencyCode(targetCurrency);
+
+    let token = null;
+    try {
+      const res = await AuthService.loginWithGoogle({
+        email,
+        name,
+        googleId: googleData.googleId || `g_${Date.now()}`,
+        credential: googleData.credential || 'google_oauth_token',
+      });
+      if (res?.data?.token) {
+        token = res.data.token;
+        localStorage.setItem('upiq_token', token);
+      }
+    } catch {}
+
+    const updatedProfile = {
+      ...testStandardUser,
+      email,
+      name,
+      currency: targetCurrency,
+      role: 'user',
+      accountType: 'Google Verified Account',
+      avatar: googleData.picture || testStandardUser.avatar,
+    };
+
+    setProfile(updatedProfile);
+    setIsAuthenticated(true);
+    setActiveTab(postLoginRedirect || 'dashboard');
+    setCurrentView('app');
+    setPostLoginRedirect('dashboard');
+
+    try {
+      localStorage.setItem('upiq_auth', JSON.stringify(true));
+      localStorage.setItem('upiq_profile', JSON.stringify(updatedProfile));
+      localStorage.setItem('upiq_currency', JSON.stringify(targetCurrency));
+    } catch {}
+
+    if (token) {
+      try {
+        const txRes = await TransactionService.getAll();
+        if (txRes?.data && Array.isArray(txRes.data) && txRes.data.length > 0) {
+          setTransactions(txRes.data);
+        }
+      } catch {}
+    }
+
+    addToast('Google Sign In', `Signed in as ${name}`, 'success');
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setActiveTab('dashboard');
@@ -376,6 +430,7 @@ export const FinancialProvider = ({ children }) => {
       value={{
         isAuthenticated,
         login,
+        loginWithGoogle,
         logout,
         profile,
         updateProfile,

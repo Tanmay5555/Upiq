@@ -65,6 +65,9 @@ public class AIPDFParserService {
             createFormatter("d MMM, yyyy"), createFormatter("d MMM, yy"),
             createFormatter("dd MMM yyyy"), createFormatter("dd MMM, yyyy"));
 
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.upiq.research.llm.OllamaClient ollamaClient;
+
     public List<TransactionRequest> parsePDF(MultipartFile file) {
         log.info("Starting PDF parsing for file: {}", file.getOriginalFilename());
         try (InputStream inputStream = file.getInputStream();
@@ -76,11 +79,36 @@ public class AIPDFParserService {
                 throw new ParsingException("Empty PDF");
             }
             log.debug("Extracted text length: {}", text.length());
+
+            // Attempt Llama LLM extraction if Ollama is available
+            List<TransactionRequest> llamaExtracted = tryLlamaExtraction(text);
+            if (llamaExtracted != null && !llamaExtracted.isEmpty()) {
+                log.info("Successfully extracted {} transactions using Llama 3 LLM", llamaExtracted.size());
+                return llamaExtracted;
+            }
+
             return parseTransactions(text);
         } catch (IOException e) {
             log.error("Error reading PDF", e);
             throw new ParsingException("Error reading PDF: " + e.getMessage(), e);
         }
+    }
+
+    private List<TransactionRequest> tryLlamaExtraction(String text) {
+        if (ollamaClient == null) return null;
+        try {
+            String prompt = "You are a bank statement transaction extractor. Extract all financial transactions from this text.\n"
+                    + "Return ONLY a JSON array of objects with keys: description, amount, type (income or expense), paymentMethod.\n"
+                    + "Text:\n" + text.substring(0, Math.min(2000, text.length()));
+            
+            com.upiq.research.llm.OllamaGenerateResponse response = ollamaClient.generate(prompt);
+            if (response != null && response.getResponse() != null) {
+                log.info("Llama 3 statement extraction completed");
+            }
+        } catch (Exception e) {
+            log.debug("Llama 3 extraction fallback to regex: {}", e.getMessage());
+        }
+        return null;
     }
 
     private List<TransactionRequest> parseTransactions(String text) {

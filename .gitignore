@@ -35,3 +35,6 @@ backend/target/
 .env
 .env.local
 .env.*.local
+
+# Nested clones / external repos
+UPIQ-AI/

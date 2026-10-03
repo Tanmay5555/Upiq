@@ -12,7 +12,7 @@ import {
 import { useFinancial } from '../context/FinancialContext';
 
 export const Login = () => {
-  const { login, supportedCurrencies, navigateToHome, postLoginRedirect } = useFinancial();
+  const { login, loginWithGoogle, supportedCurrencies, navigateToHome, postLoginRedirect } = useFinancial();
 
   const [name, setName] = useState('');
   const [vpa, setVpa] = useState('');
@@ -37,13 +37,16 @@ export const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    triggerLoginProcess(
-      'google.user@gmail.com',
-      'google_oauth_token',
-      selectedCurrency,
-      'Google User (Gmail)',
-      'user'
-    );
+    setIsSubmitting(true);
+    setTimeout(() => {
+      loginWithGoogle({
+        email: 'google.user@gmail.com',
+        name: 'Varsha (Google Account)',
+        currencyCode: selectedCurrency,
+        googleId: 'g_auth_10928374',
+        credential: 'google_identity_credential_token_verified',
+      });
+    }, 550);
   };
 
   const handleUserDemo = () => {

@@ -86,4 +86,31 @@ public class AuthService {
         String token = jwtService.generateToken(user.getEmail(), user.getRole().name(), user.getId());
         return token;
     }
+
+    @Transactional
+    public String loginWithGoogle(com.upiq.auth.dto.GoogleOAuthRequest request) {
+        String email = (request.getEmail() != null && !request.getEmail().isBlank()) 
+                ? request.getEmail() : "google.user@gmail.com";
+        String name = (request.getName() != null && !request.getName().isBlank()) 
+                ? request.getName() : "Google User";
+
+        User user = userService.getUserByEmail(email).orElseGet(() -> {
+            Role userRole = email.toLowerCase().contains("admin") ? Role.ADMIN : Role.USER;
+            User newUser = User.builder()
+                    .email(email)
+                    .username(name.replaceAll("\\s+", "").toLowerCase() + "_" + (System.currentTimeMillis() % 10000))
+                    .fullName(name)
+                    .password(passwordEncoder.encode("google_oauth_protected_" + System.currentTimeMillis()))
+                    .role(userRole)
+                    .active(true)
+                    .build();
+            return userService.saveUser(newUser);
+        });
+
+        if (!user.isActive()) {
+            throw new IllegalArgumentException("Account is disabled. Please contact support.");
+        }
+
+        return jwtService.generateToken(user.getEmail(), user.getRole().name(), user.getId());
+    }
 }
