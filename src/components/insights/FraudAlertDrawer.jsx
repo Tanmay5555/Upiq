@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ShieldAlert, CheckCircle, Lock, AlertOctagon, MapPin, Calendar, CreditCard } from 'lucide-react';
+import { X, ShieldAlert, CheckCircle, Lock, MapPin } from 'lucide-react';
 import { useFinancial } from '../../context/FinancialContext';
 import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
