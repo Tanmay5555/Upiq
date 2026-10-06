@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Send, Bot, User, Sparkles, Volume2, Mic, MicOff, RefreshCw } from 'lucide-react';
+import { Send, Bot, User, Sparkles, Volume2 } from 'lucide-react';
 import { useFinancial } from '../context/FinancialContext';
 import { useVoiceInput } from '../hooks/useVoiceInput';
 import { VoiceRipple } from '../components/ai/VoiceRipple';
@@ -8,7 +8,8 @@ import { Button } from '../components/common/Button';
 import { FinancialChatService } from '../services/financial-chat.service';
 
 export const AIAssistant = () => {
-  const { aiPromptQuery, setAiPromptQuery, transactions, kpi, budgets, formatCurrency } = useFinancial();
+  const { aiPromptQuery, setAiPromptQuery, transactions, kpi, formatCurrency } = useFinancial();
+
   const [messages, setMessages] = useState([
     {
       id: 'm1',

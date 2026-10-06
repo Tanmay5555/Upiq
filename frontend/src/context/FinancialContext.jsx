@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { AuthService } from '../services/auth.service';
 import { TransactionService } from '../services/transaction.service';
 import { FinancialDashboardService } from '../services/financial-dashboard.service';
-import { CategoryService } from '../services/category.service';
 import {
   userProfile as initialProfile,
   testStandardUser,
