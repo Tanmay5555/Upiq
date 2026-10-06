@@ -21,3 +21,6 @@ export const FinancialDashboardService = {
     return true;
   },
 };
+
+export default FinancialDashboardService;
+

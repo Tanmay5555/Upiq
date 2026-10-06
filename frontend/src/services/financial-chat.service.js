@@ -6,3 +6,6 @@ export const FinancialChatService = {
     return response.data;
   },
 };
+
+export default FinancialChatService;
+

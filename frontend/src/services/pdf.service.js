@@ -13,3 +13,6 @@ export const PDFService = {
     return response.data;
   },
 };
+
+export default PDFService;
+

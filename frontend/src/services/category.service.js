@@ -26,3 +26,6 @@ export const CategoryService = {
     return response.data;
   },
 };
+
+export default CategoryService;
+

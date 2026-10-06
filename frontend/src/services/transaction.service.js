@@ -36,3 +36,6 @@ export const TransactionService = {
     return response.data;
   },
 };
+
+export default TransactionService;
+
