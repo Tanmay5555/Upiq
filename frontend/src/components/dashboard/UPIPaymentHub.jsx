@@ -102,7 +102,7 @@ export const UPIPaymentHub = () => {
     <section className="upi-hub space-y-5" aria-label="UPI payment tools">
       <div className="upi-status glass-surface">
         <div className="status-user"><div className="status-avatar">{initials}</div><div><p className="status-greeting">YOUR UPI SPACE</p><h2>Hey, {profile.name.split(' ')[0]} <span>✦</span></h2></div></div>
-        <div className="upi-id-pill"><span className="upi-online-dot" /><span>{profile.email?.split('@')[0] || 'varsha.sharma'}@upiq</span><BadgeCheck size={14} /></div>
+        <div className="upi-id-pill"><span className="upi-online-dot" /><span>{profile.email?.split('@')[0] || 'user'}@upiq</span><BadgeCheck size={14} /></div>
         <div className="status-secure"><ShieldCheck size={15} /> Protected by UPIQ Shield</div>
       </div>
 

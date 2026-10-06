@@ -36,8 +36,8 @@ export const Profile = () => {
 
   // Local form state initialized from global profile
   const [formData, setFormData] = useState({
-    name: profile.name || 'Varsha Sharma',
-    email: profile.email || 'varsha.s@upiq.ai',
+    name: profile.name || 'User Account',
+    email: profile.email || 'user@upiq.ai',
     phone: profile.phone || '+1 (555) 234-5678',
     bio: profile.bio || 'Fintech enthusiast & AI Product Strategist',
     country: profile.country || 'United States',

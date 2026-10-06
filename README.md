@@ -186,9 +186,75 @@ Important backend packages: `auth`, `config`, `transaction`, `transaction.catego
 
 The configured remote is `https://github.com/yourxharsh19/UPIQ-AI.git`. Git will therefore create a directory named `UPIQ-AI` when cloned without a destination override:
 
+<<<<<<< HEAD
 ```powershell
 git clone https://github.com/yourxharsh19/UPIQ-AI.git
 cd UPIQ-AI
+=======
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Tanmay5555/Upiq.git
+   cd Upiq
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` in your browser.
+
+4. **Build for Production**:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🔑 Demo Access Credentials
+
+You can test the application using one-click demo buttons on the login screen or enter the following details:
+
+| Account Type | Email / UPI ID | Role | Features Accessible |
+| :--- | :--- | :--- | :--- |
+| **Standard User** | `user@upiq.ai` | `user` | Dashboard, UPI Transfers, AI Assistant, Budgets, Reports, Profile |
+| **Super Admin** | `admin@upiq.ai` | `admin` | Full Access + System Health Monitoring & Global Admin Analytics |
+
+---
+
+## 📁 Project Architecture
+
+```
+upiq-ai/
+├── public/
+│   └── upiq-logo.jpg              # High-res 3D metallic brand logo & favicon
+├── src/
+│   ├── assets/                    # Static image & vector assets
+│   ├── components/
+│   │   ├── ai/                    # Voice ripple wave components
+│   │   ├── common/                # Reusable UI (Button, Card, Badge, Modal, GradientTransition, Toast)
+│   │   ├── dashboard/             # UPIPaymentHub, StatCards, Charts, RecentTransactions
+│   │   ├── insights/              # FraudAlertDrawer, AnomalyCards
+│   │   ├── layout/                # MainLayout, Sidebar, Header, BottomNav
+│   │   ├── reports/               # PDFPreviewModal, MonthlyReportCards
+│   │   └── transactions/          # AddEditTransactionModal, TransactionTable
+│   ├── context/
+│   │   ├── FinancialContext.jsx   # Global financial state, multi-currency engine & RBAC
+│   │   └── ThemeContext.jsx       # Dark / Light mode context controller
+│   ├── hooks/                     # Custom React hooks (useVoiceInput, useTransactions)
+│   ├── pages/                     # Dashboard, Transactions, AIAssistant, Insights, Reports, Admin, Profile, Login
+│   ├── data/
+│   │   └── mockData.js            # Initial dataset, currencies, and test accounts
+│   ├── App.jsx                    # Root app routing & animated page controller
+│   ├── index.css                  # Global Tailwind v4 CSS design tokens & gradient utilities
+│   └── main.jsx                   # Application entry point
+├── index.html                     # HTML shell & favicon links
+└── package.json                   # Project dependencies & npm scripts
+>>>>>>> e70a10e (fix: remove mock user data and enable dynamic user profile fallback)
 ```
 
 To use the workspace name instead, specify it as the clone destination:

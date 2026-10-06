@@ -41,7 +41,7 @@ export const Login = () => {
     setTimeout(() => {
       loginWithGoogle({
         email: 'google.user@gmail.com',
-        name: 'Varsha (Google Account)',
+        name: 'Google User',
         currencyCode: selectedCurrency,
         googleId: 'g_auth_10928374',
         credential: 'google_identity_credential_token_verified',
@@ -50,11 +50,11 @@ export const Login = () => {
   };
 
   const handleUserDemo = () => {
-    triggerLoginProcess('varsha.s@upiq.ai', 'user123', selectedCurrency, 'Varsha Sharma', 'user');
+    triggerLoginProcess('user@upiq.ai', 'user123', selectedCurrency, 'User Account', 'user');
   };
 
   const handleAdminDemo = () => {
-    triggerLoginProcess('admin@upiq.ai', 'admin123', selectedCurrency, 'Tanmay Admin', 'admin');
+    triggerLoginProcess('admin@upiq.ai', 'admin123', selectedCurrency, 'System Administrator', 'admin');
   };
 
   const handleCurrencySelect = (code, country) => {
@@ -332,7 +332,7 @@ export const Login = () => {
                     whileTap={{ scale: 0.97 }}
                     onClick={handleUserDemo}
                     className="py-2.5 px-3 rounded-xl border border-indigo-500/30 bg-indigo-600/10 hover:bg-indigo-600/20 text-xs font-semibold text-indigo-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
-                    title="Login as Standard User (Varsha Sharma)"
+                    title="Login as Standard User"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
                     <span>User Login</span>
@@ -344,7 +344,7 @@ export const Login = () => {
                     whileTap={{ scale: 0.97 }}
                     onClick={handleAdminDemo}
                     className="py-2.5 px-3 rounded-xl border border-purple-500/30 bg-purple-600/10 hover:bg-purple-600/20 text-xs font-semibold text-purple-300 transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
-                    title="Login as Admin (Tanmay Admin)"
+                    title="Login as System Admin"
                   >
                     <ShieldCheck className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                     <span>Admin Login</span>

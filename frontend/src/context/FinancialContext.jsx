@@ -26,7 +26,15 @@ export const FinancialProvider = ({ children }) => {
   const getInitialState = (key, fallback) => {
     try {
       const saved = localStorage.getItem(`upiq_${key}`);
-      return saved ? JSON.parse(saved) : fallback;
+      if (saved) {
+        // Clear legacy cached demo profiles if they contain old mock name
+        if (key === 'profile' && saved.toLowerCase().includes('varsha')) {
+          localStorage.removeItem('upiq_profile');
+          return fallback;
+        }
+        return JSON.parse(saved);
+      }
+      return fallback;
     } catch {
       return fallback;
     }
@@ -295,10 +303,16 @@ export const FinancialProvider = ({ children }) => {
       localStorage.setItem('upiq_token', token);
     }
 
+    const derivedName = userName && userName.trim()
+      ? userName
+      : email && email.includes('@')
+      ? email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1)
+      : basePreset.name;
+
     const updatedProfile = {
       ...basePreset,
       email: email || basePreset.email,
-      name: userName || basePreset.name,
+      name: derivedName,
       currency: targetCurrency,
       role: isAdmin ? 'admin' : 'user',
       accountType: isAdmin ? 'UPIQ Super Admin' : 'UPIQ Pro AI',
